@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Próximamente - IEPP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos personalizados adicionales si son necesarios */
+        body {
+            font-family: 'Satoshi', sans-serif; /* Asumiendo que quieres usar Satoshi */
+        }
+        .timer-circle {
+            border: 2px solid white;
+            color: white;
+        }
+        .timer-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        /* Estilo para el input de email */
+        .email-input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+        .email-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        /* Paleta de colores IEPP */
+        :root {
+            --color-iepp-blue: #0C0F40;
+            --color-iepp-yellow: #F2E205;
+        }
+    </style>
+    <!-- Si tienes tus fuentes Cabinet Grotesk y Satoshi locales y quieres usarlas -->
+    <!-- <link rel="stylesheet" href="path/to/your/fonts.css"> -->
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Contenedor Principal con Imagen de Fondo -->
+    <div 
+        class="relative min-h-screen flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat p-4"
+        style="background-image: url('/assets/img.webp');" 
+    >
+        <!-- Overlay oscuro para mejorar legibilidad del texto -->
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+
+        <!-- Contenedor del Contenido con Fondo Translúcido -->
+        <div class="relative z-10 bg-black bg-opacity-40 backdrop-blur-md p-8 sm:p-10 md:p-12 rounded-xl shadow-2xl max-w-xl w-full text-center">
+            
+            <!-- Opcional: Logo -->
+            <!-- <img src="./assets/logo.svg" alt="IEPP Logo" class="h-12 mx-auto mb-6"> -->
+
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4" style="color: var(--color-iepp-yellow);">
+              Cooking up something SPECIAL!
+            </h1>
+           
+
+            <!-- Cuenta Regresiva -->
+            <div id="countdown" class="grid grid-cols-4 gap-2 sm:gap-4 mb-8">
+                <div>
+                    <div id="days" class="timer-circle text-3xl sm:text-4xl font-bold w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto">00</div>
+                    <p class="timer-label text-xs sm:text-sm mt-2">DÍAS</p>
+                </div>
+                <div>
+                    <div id="hours" class="timer-circle text-3xl sm:text-4xl font-bold w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto">00</div>
+                    <p class="timer-label text-xs sm:text-sm mt-2">HORAS</p>
+                </div>
+                <div>
+                    <div id="minutes" class="timer-circle text-3xl sm:text-4xl font-bold w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto">00</div>
+                    <p class="timer-label text-xs sm:text-sm mt-2">MINUTOS</p>
+                </div>
+                <div>
+                    <div id="seconds" class="timer-circle text-3xl sm:text-4xl font-bold w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto">00</div>
+                    <p class="timer-label text-xs sm:text-sm mt-2">SEGUNDOS</p>
+                </div>
+            </div>
+
+            <!-- Formulario de Suscripción (Opcional) -->
+            <p class="text-sm text-gray-300 mb-3">
+              Be the first to know when we launch.
+            </p>
+            <form id="subscribeForm" class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
+                <input 
+                    type="email" 
+                    id="emailInput"
+                    name="email" 
+                    placeholder="Tu correo electrónico" 
+                    required
+                    class="email-input flex-grow px-4 py-2.5 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-iepp-yellow)]"
+                >
+                <button 
+                    type="submit"
+                    class="font-semibold px-6 py-2.5 rounded-md transition-colors duration-300"
+                    style="background-color: var(--color-iepp-yellow); color: var(--color-iepp-blue);"
+                    onmouseover="this.style.backgroundColor='#E0D104'" 
+                    onmouseout="this.style.backgroundColor='var(--color-iepp-yellow)'"
+                >
+                    SUBSCRIBE
+                </button>
+            </form>
+            <p id="formMessage" class="mt-3 text-sm h-5"></p> <!-- Para mensajes de éxito/error -->
+
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURACIÓN DE LA CUENTA REGRESIVA ---
+        // ¡¡¡CAMBIA ESTA FECHA A TU FECHA DE LANZAMIENTO!!!
+        const countdownDate = new Date("Jun 30, 2025 23:59:59").getTime();
+
+        const countdownFunction = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = String(days).padStart(2, '0');
+            document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(countdownFunction);
+                document.getElementById("countdown").innerHTML = "<p class='col-span-4 text-2xl font-bold' style='color: var(--color-iepp-yellow);'>¡HEMOS LANZADO!</p>";
+            }
+        }, 1000);
+
+        // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN (Ejemplo Simple) ---
+        // Para un formulario real, necesitarás un backend o un servicio como Mailchimp, SendGrid, etc.
+        // Este es solo un ejemplo para mostrar un mensaje.
+        const form = document.getElementById('subscribeForm');
+        const formMessage = document.getElementById('formMessage');
+        const emailInput = document.getElementById('emailInput');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Previene el envío real del formulario
+            
+            // Validación simple
+            if (!emailInput.value || !emailInput.checkValidity()) {
+                formMessage.textContent = 'Por favor, introduce un email válido.';
+                formMessage.style.color = 'var(--color-iepp-yellow)'; // O un color de error
+                return;
+            }
+
+            // Aquí iría la lógica para enviar el email a tu backend/servicio
+            // console.log("Email a suscribir:", emailInput.value); 
+
+            formMessage.textContent = '¡Gracias por suscribirte!';
+            formMessage.style.color = 'var(--color-iepp-yellow)'; // Color de éxito
+            emailInput.value = ''; // Limpia el input
+
+            setTimeout(() => {
+                formMessage.textContent = '';
+            }, 3000);
+        });
+    </script>
+
+</body>
+</html>
