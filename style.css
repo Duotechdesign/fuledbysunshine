@@ -1,47 +1,25 @@
-/* style.css */
-/* style.css */
-
-@font-face {
-    font-family: 'Misrow'; /* El nombre que usarás en tu CSS */
-    src: url('./assets/MisrowDemo.otf') format('opentype'); /* Ruta RELATIVA al archivo de fuente */
-    /* Si tuvieras otros formatos, los añadirías aquí:
-    src: url('./assets/MisrowDemo.woff2') format('woff2'),
-         url('./assets/MisrowDemo.otf') format('opentype'),
-         url('./assets/MisrowDemo.ttf') format('truetype');
-    */
-    font-weight: normal; /* O el peso que corresponda a este archivo de fuente */
-    font-style: normal;  /* O italic si es una fuente itálica */
-    font-display: swap; /* Buena práctica para el rendimiento de carga de fuentes */
-}
+/* style.css - Para "Fuled by Sunshine" */
 
 :root {
-    --color-brand-yellow: #EEBF48;
-    /* ... tus otras variables de color ... */
-    --font-primary: 'Misrow', sans-serif; /* Define Misrow como fuente primaria */
-    --font-secondary: 'Poppins', sans-serif; /* Ejemplo de fuente secundaria si la necesitas */
+    --color-brand-yellow: #EEBF48; /* Amarillo de tu ejemplo */
+    --color-text-on-frosted: #374151; /* Un gris oscuro para texto sobre el fondo claro esmerilado (Tailwind gray-700) */
+    --color-text-muted-on-frosted: #6B7280; /* Gris más claro (Tailwind gray-500) */
+    --color-placeholder: #9CA3AF; /* Tailwind gray-400 */
+    --color-button-text-on-yellow: #1F2937; 
+    --color-body-bg: #111827; /* Fondo oscuro si la imagen no cubre todo */
+    --content-box-bg: rgba(231, 231, 231, 0.2); /* #E7E7E7 con 20% opacidad */
 }
 
 body {
-    font-family: var(--font-secondary); /* O var(--font-primary) si quieres Misrow por defecto */
-    /* ... resto de tus estilos de body ... */
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--color-body-bg);
+    color: var(--color-text-on-dark); /* Color por defecto si hay texto fuera del content-box */
+    margin: 0;
+    line-height: 1.6;
 }
 
-/* ... resto de tu style.css ... */
-
-/* Ejemplo de cómo aplicar Misrow a un elemento específico */
-.main-title {
-    font-family: var(--font-primary); /* Usa Misrow para el título principal */
-    color: var(--color-brand-yellow);
-    /* ... otros estilos para .main-title ... */
-}
-
-/* Si quieres que los números de la cuenta regresiva usen Misrow */
-.timer-circle {
-    font-family: var(--font-primary);
-    /* ... otros estilos para .timer-circle ... */
-}
+/* Contenedor principal de la imagen de fondo */
 .background-container {
-    /* background-image se establece inline en el HTML */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -50,77 +28,78 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1rem; /* 16px */
+    padding: 1rem;
     position: relative;
 }
 
-/* Overlay oscuro sobre la imagen de fondo */
-.background-overlay {
+/* Overlay o ajuste de opacidad de la imagen de fondo */
+/* Opción 1: Si la imagen de fondo es un <img> tag, se le puede aplicar opacidad */
+/* Opción 2: Si es background-image en .background-container, un overlay es mejor */
+.background-overlay { /* Este overlay puede ayudar a oscurecer la imagen de fondo para el efecto */
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.50); /* Opacidad del overlay ajustada */
+    background-color: rgba(0, 0, 0, 0.23); /* 100% - 77% = 23% opacidad del overlay si la imagen es 100% opaca */
+                                         /* O si quieres que la imagen TENGA 77% opacidad, puedes aplicar a la imagen o a este overlay un (1 - 0.77) = 0.23 */
+                                         /* Más simple: Si la imagen es un <img>, puedes ponerle opacity: 0.77 directamente. */
+                                         /* Por ahora, asumimos que el overlay oscurece un poco. */
     z-index: 1;
 }
 
-/* Contenedor del contenido central con fondo translúcido */
+
+/* Contenedor del contenido central con efecto "frosted glass" */
 .content-box {
     position: relative;
     z-index: 2;
-    background-color: rgba(12, 15, 64, 0.4); /* Azul IEPP con 40% opacidad */
-    backdrop-filter: blur(8px); /* Desenfoque un poco más sutil */
-    -webkit-backdrop-filter: blur(8px);
+    background-color: var(--content-box-bg); /* #E7E7E7 con 20% opacidad */
+    backdrop-filter: blur(20px); /* desenfoque de 20px */
+    -webkit-backdrop-filter: blur(20px); /* Para Safari */
     border-radius: 0.75rem; /* 12px */
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
-    padding: 2rem; /* 32px */
-    max-width: 34rem; /* Un poco más estrecho que max-w-xl (576px vs 672px) */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil blanco translúcido */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Sombra para destacar */
+    padding: 2rem; /* p-8 */
+    max-width: 34rem; 
     width: 100%;
     text-align: center;
 }
 
-/* Logo (si lo añades) */
-.logo-image {
-    height: 3rem; /* 48px */
-    margin: 0 auto 1.5rem auto; /* Centrado y con margen inferior */
-}
-
 /* Título principal */
 .main-title {
-    font-family: 'CabinetGrotesk-Bold', sans-serif; /* Asumiendo que tienes Cabinet Grotesk */
-    color: var(--color-iepp-yellow);
-    font-size: 1.875rem; /* text-3xl */
-    line-height: 2.25rem;
-    font-weight: 700;
-    margin-bottom: 1rem; /* mb-4 */
+    font-family: 'Poppins', sans-serif; 
+    color: var(--color-brand-yellow); /* Amarillo */
+    font-size: 1.5rem; 
+    font-weight: 600; 
+    margin-bottom: 1.5rem; 
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 /* Prompt para suscribirse */
 .subscribe-prompt {
-    font-size: 0.875rem; /* text-sm */
-    line-height: 1.25rem;
-    color: var(--color-text-muted-on-dark);
-    margin-bottom: 0.75rem; /* mb-3 */
+    font-size: 0.875rem; 
+    color: var(--color-text-on-frosted); /* Texto más oscuro para contraste sobre #E7E7E7 translúcido */
+    margin-bottom: 0.75rem;
 }
 
 /* Contenedor de la cuenta regresiva */
 .countdown-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.75rem; /* gap-3 */
-    margin-bottom: 2rem; /* mb-8 */
+    gap: 0.75rem; 
+    margin-bottom: 2rem;
 }
 
 /* Círculos de la cuenta regresiva */
 .timer-circle {
-    border: 2px solid var(--color-text-on-dark);
-    color: var(--color-iepp-yellow);
-    font-family: 'CabinetGrotesk-Bold', sans-serif;
-    font-size: 1.875rem; /* text-3xl */
-    font-weight: 700;
-    width: 4.5rem; /* Aprox. w-18 */
-    height: 4.5rem; /* Aprox. h-18 */
+    border: 1.5px solid var(--color-text-on-frosted); /* Borde más oscuro */
+    color: var(--color-brand-yellow);             /* Números en amarillo */
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.875rem; 
+    font-weight: 500; 
+    width: 4.5rem; 
+    height: 4.5rem;
     border-radius: 9999px;
     display: flex;
     align-items: center;
@@ -129,104 +108,88 @@ body {
     margin-right: auto;
 }
 
-/* Etiquetas de la cuenta regresiva (DÍAS, HORAS, etc.) */
+/* Etiquetas de la cuenta regresiva (DAYS, HORAS, etc.) */
 .timer-label {
-    color: var(--color-text-muted-on-dark);
-    font-size: 0.75rem; /* text-xs */
-    margin-top: 0.5rem; /* mt-2 */
+    color: var(--color-text-muted-on-frosted); /* Gris más oscuro para etiquetas */
+    font-size: 0.75rem; 
+    margin-top: 0.5rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em; /* tracking-wider */
+    letter-spacing: 0.075em;
 }
 
 /* Formulario de Suscripción */
 .subscribe-form {
     display: flex;
-    flex-direction: column; /* Por defecto para móvil */
-    gap: 0.75rem; /* gap-3 */
-    max-width: 24rem; /* max-w-sm */
+    flex-direction: column;
+    gap: 0.75rem; 
+    max-width: 24rem; 
     margin-left: auto;
     margin-right: auto;
 }
 
 /* Input de email */
 .email-input {
-    background-color: rgba(17, 24, 39, 0.5); /* Tailwind gray-900 con opacidad */
-    border: 1px solid rgba(75, 85, 99, 0.7); /* Tailwind gray-600 con opacidad */
-    color: var(--color-text-on-dark);
+    background-color: rgba(255, 255, 255, 0.15); /* Fondo blanco translúcido */
+    border: 1px solid rgba(209, 213, 219, 0.4); /* Borde gris claro translúcido */
+    color: var(--color-text-on-frosted); /* Texto oscuro */
     flex-grow: 1;
-    padding: 0.625rem 1rem; /* py-2.5 px-4 */
-    border-radius: 0.375rem; /* rounded-md */
+    padding: 0.75rem 1rem;
+    border-radius: 9999px;
     outline: none;
-    font-size: 0.875rem; /* text-sm */
+    font-size: 0.875rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .email-input::placeholder {
-    color: var(--color-placeholder-on-dark);
+    color: var(--color-placeholder-on-dark); /* Podría necesitar un placeholder más oscuro */
 }
 .email-input:focus {
-    border-color: var(--color-iepp-yellow);
-    box-shadow: 0 0 0 2px rgba(242, 226, 5, 0.4); /* Anillo amarillo semitransparente */
+    border-color: var(--color-brand-yellow);
+    box-shadow: 0 0 0 2px rgba(238, 191, 72, 0.4); 
 }
 
 /* Botón de Suscripción */
 .subscribe-button {
-    /* background-color y color se establecen inline en el HTML con variables CSS */
-    font-family: 'CabinetGrotesk-Bold', sans-serif;
+    background-color: var(--color-brand-yellow);
+    color: var(--color-button¡Entendido! Ya veo la diferencia entre tu resultado actual y el diseño objetivo. Quieres ese efecto de "vidrio esmerilado" o "frosted glass" para el contenedor del contenido, y ajustar los colores para que coincidan con tu imagen de referencia.
+
+**Ajustes para `style.css` (y potencialmente el HTML si quitamos el overlay oscuro):**
+
+**Colores Clave del Diseño Objetivo:**
+
+*   **Imagen-text-on-yellow); /* Texto oscuro sobre botón amarillo */
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    padding: 0.625rem 1.5rem; /* py-2.5 px-6 */
-    border-radius: 0.375rem; /* rounded-md */
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
     transition: background-color 0.3s ease;
     cursor: pointer;
     border: none;
+    text-transform: uppercase;
+    font-size: 0.875rem;
 }
-/* El hover se maneja con JS en el HTML, pero si prefieres CSS: */
-/*
 .subscribe-button:hover {
-    background-color: #E0D104 !important; // Usar !important para sobreescribir el inline si es necesario
+    background-color: #d9a937; 
 }
-*/
 
 /* Mensaje del Formulario */
 .form-message-style {
-    margin-top: 0.75rem; /* mt-3 */
-    font-size: 0.875rem; /* text-sm */
-    height: 1.25rem; /* h-5 */
-    min-height: 1.25rem; /* Para evitar saltos de layout */
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    height: 1.25rem;
+    min-height: 1.25rem;
+    color: var(--color-text-on-frosted); /* Mensaje del formulario también con texto más oscuro */
 }
 
-
-/* Media Queries para Responsividad (ejemplo para sm breakpoint) */
+/* Media Queries */
 @media (min-width: 640px) { /* sm: */
-    .content-box {
-        padding: 2.5rem; /* sm:p-10 */
-        max-width: 36rem; /* sm:max-w-xl */
-    }
-    .main-title {
-        font-size: 2.25rem; /* sm:text-4xl */
-        line-height: 2.5rem;
-    }
-    .timer-circle {
-        font-size: 2.25rem; /* sm:text-4xl */
-        width: 5rem;    /* sm:w-20 */
-        height: 5rem;   /* sm:h-20 */
-    }
-    .timer-label {
-        font-size: 0.875rem; /* sm:text-sm */
-    }
-    .subscribe-form {
-        flex-direction: row; /* En sm y más grandes, el input y botón en fila */
-        gap: 0.5rem; /* gap-2 */
-    }
-    .email-input {
-        font-size: 1rem; /* text-base */
-    }
+    .content-box { padding: 2.5rem; max-width: 36rem; }
+    .main-title { font-size: 1.875rem; }
+    .timer-circle { font-size: 1.875rem; width: 5rem; height: 5rem; }
+    .timer-label { font-size: 0.875rem; }
+    .subscribe-form { flex-direction: row; gap: 0.5rem; }
+    .email-input { font-size: 1rem; }
 }
-
 @media (min-width: 768px) { /* md: */
-    .content-box {
-        padding: 3rem; /* md:p-12 */
-    }
-    .main-title {
-        font-size: 2.25rem; /* md:text-4xl (mantenemos igual que sm, o puedes aumentarlo a 5xl como en tu HTML original) */
-    }
+    .content-box { padding: 3rem; }
+    .main-title { font-size: 2.25rem; /* md:text-4xl original */ }
 }

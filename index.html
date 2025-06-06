@@ -2,76 +2,83 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta de Fondo:** Tiene una opacidad general o un overlay que la hace más tenue.
+*   **Contenedor de Contenido (`.content-box`):**
+    *   Color de fondo: `rgba(231, 231, 231, 0.2)` (Esto es #E7E7E7 con 20% de opacidad).
+    *   `backdrop-filter: blur(Xpx);` (El desenfoque del fondo).
+*   **Texto Principal (`.main-title`):** Amarillo/Dorado (tu `#EEBF48`).
+*   **Números del Timer (`.timer-circle`):** El número en amarillo/dorado, el círculo en blanco.
+*   **Etiquetas del Timer (`.timer-label`):** Blancas o un gris muy claro, con cierta transparencia.
+*   **Texto "Be the first..." (`.subscribe-prompt`):** Blanco o un gris muy claro, con cierta transparencia.
+*   **Input Email:** Bordes sutiles, placeholder claro.
+*   **Botón Subscribe:** Fondo amarillo/dorado, texto oscuro.
+
+**Modificaciones en `style.css`:**
+
+```css
+/* style.css - Para "Fuled by Sunshine" */
+
+:root {
+    --color-brand-yellow: #EEBF48; 
+    --color-text-on-frosted: #FFFFFF; /* Texto principal sobre el content-box */
+    --color-text-muted-on-frosted: rgba(255, 255, 255, 0.75);
+    --color-placeholder-on-frosted: rgba(255, 255, 255, 0.6);
+    --color-button-text-on-yellow: #1A1A1A; /* Un negro o gris muy oscuro para el botón */
+    --color-body-bg: #333333; /* Un gris oscuro si la imagen no cubre todo */
+    --font-primary: 'Misrow', sans-serif; /* Tu fuente Misrow */
+    --font-secondary: 'Poppins', sans-serif; /* O la que estés usando para cuerpo */
+}
+
+body {
+    font-family: var(--font-secondary);
+    background-color: var(--color-body-bg);
+    color: var(--color-text-on-frosted); /* Texto blanco por defecto para la página */
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Contenedor principal de la imagen de fondo */
+.background-container {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Próximamente - Fuled by Sunshine</title>
-    <link rel="stylesheet" href="style.css"> 
-    {/* Si tienes definiciones @font-face en un fonts.css separado, enlaza ese también: */}
-    {/* <link rel="stylesheet" href="./assets/fonts.css"> */}
+    <link rel="stylesheet" href="style.css">
+    {/* Añade aquí el enlace a Google Fonts si usas Poppins u otra */}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div 
         class="background-container"
-        style="background-image: url('./assets/img.webp');"  {/* RUTA RELATIVA */}
+        style="background-image: url('./assets/img.webp');" 
     >
-    >
-        <div class="background-overlay"></div>
+        {/* El .background-overlay ahora controla la opacidad general de la imagen de fondo si es necesario */}
+        {/* O puedes aplicar opacity: 0.77; directamente al .background-container si prefieres que la imagen en sí sea translúcida */}
+        <div class="background-overlay"></div> 
 
         <div class="content-box">
-            
-         
-
             <h1 class="main-title">
               Cooking up something SPECIAL!
             </h1>
-           
+            {/* ... resto del contenido (cuenta regresiva, formulario) sin cambios en la estructura HTML ... */}
+            {/* Asegúrate de que los elementos usen las clases CSS definidas */}
             <div id="countdown" class="countdown-grid">
-                <div>
-                    <div id="days" class="timer-circle">00</div>
-                    <p class="timer-label">DAYS</p>
-                </div>
-                <div>
-                    <div id="hours" class="timer-circle">00</div>
-                    <p class="timer-label">HOURS</p>
-                </div>
-                <div>
-                    <div id="minutes" class="timer-circle">00</div>
-                    <p class="timer-label">MINUTES</p>
-                </div>
-                <div>
-                    <div id="seconds" class="timer-circle">00</div>
-                    <p class="timer-label">SECONDS</p>
-                </div>
+                <div><div id="days" class="timer-circle">00</div><p class="timer-label">DAYS</p></div>
+                <div><div id="hours" class="timer-circle">00</div><p class="timer-label">HOURS</p></div>
+                <div><div id="minutes" class="timer-circle">00</div><p class="timer-label">MINUTES</p></div>
+                <div><div id="seconds" class="timer-circle">00</div><p class="timer-label">SECONDS</p></div>
             </div>
-
-            <p class="subscribe-prompt"> {/* Nueva clase para este texto */}
-              Be the first to know when we launch.
-            </p>
+            <p class="subscribe-prompt">Be the first to know when we launch.</p>
             <form id="subscribeForm" class="subscribe-form">
-                <input 
-                    type="email" 
-                    id="emailInput"
-                    name="email" 
-                    placeholder="Tu correo electrónico" 
-                    required
-                    class="email-input"
-                >
-                <button 
-                    type="submit"
-                    class="subscribe-button" 
-                    style="background-color: var(--color-iepp-yellow); color: var(--color-iepp-blue);"
-                    onmouseover="this.style.backgroundColor='#E0D104'" 
-                    onmouseout="this.style.backgroundColor='var(--color-iepp-yellow)'"
-                    
-                >
-                    SUBSCRIBE
-                </button>
+                <input type="email" id="emailInput" name="email" placeholder="Tu correo electrónico" required class="email-input">
+                <button type="submit" class="subscribe-button">SUBSCRIBE</button>
             </form>
-            <p id="formMessage" class="form-message-style"></p> {/* Clase para el mensaje */}
-
+            <p id="formMessage" class="form-message-style"></p>
         </div>
     </div>
-
     <script>
         // --- CONFIGURACIÓN DE LA CUENTA REGRESIVA ---
         const countdownDate = new Date("Jun 30, 2025 23:59:59").getTime(); // ¡¡TU FECHA!!
