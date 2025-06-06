@@ -3,111 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Próximamente - IEPP</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Estilos personalizados adicionales si son necesarios */
-        body {
-            font-family: 'Satoshi', sans-serif; /* Asumiendo que quieres usar Satoshi */
-        }
-        .timer-circle {
-            border: 2px solid white;
-            color: white;
-        }
-        .timer-label {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        /* Estilo para el input de email */
-        .email-input {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-        }
-        .email-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-        /* Paleta de colores IEPP */
-        :root {
-            --color-iepp-blue: #0C0F40;
-            --color-iepp-yellow: #F2E205;
-        }
-    </style>
-    <!-- Si tienes tus fuentes Cabinet Grotesk y Satoshi locales y quieres usarlas -->
-    <!-- <link rel="stylesheet" href="path/to/your/fonts.css"> -->
-</head>
-<body class="bg-gray-900 text-white">
+    <title>Próximamente - Fuled by Sunshine</title>
+     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css"> 
+  
+</head><body>
 
-    <!-- Contenedor Principal con Imagen de Fondo -->
     <div 
-        class="relative min-h-screen flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat p-4"
-        style="background-image: url('/assets/img.webp');" 
+        class="background-container"
+        style="background-image: url('/assets/img.webp');"  /* RUTA CORRECTA */
     >
-        <!-- Overlay oscuro para mejorar legibilidad del texto -->
-        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="background-overlay"></div>
 
-        <!-- Contenedor del Contenido con Fondo Translúcido -->
-        <div class="relative z-10 bg-black bg-opacity-40 backdrop-blur-md p-8 sm:p-10 md:p-12 rounded-xl shadow-2xl max-w-xl w-full text-center">
+        <div class="content-box">
             
-            <!-- Opcional: Logo -->
-            <!-- <img src="./assets/logo.svg" alt="IEPP Logo" class="h-12 mx-auto mb-6"> -->
+            <!-- <img src="./assets/logo.svg" alt="IEPP Logo" class="logo-image"> --> {/* Clase CSS para logo si lo añades */}
 
-            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4" style="color: var(--color-iepp-yellow);">
+            <h1 class="main-title">
               Cooking up something SPECIAL!
             </h1>
            
-
-            <!-- Cuenta Regresiva -->
-            <div id="countdown" class="grid grid-cols-4 gap-2 sm:gap-4 mb-8">
+            <div id="countdown" class="countdown-grid">
                 <div>
-                    <div id="days" class="timer-circle text-3xl sm:text-4xl font-bold w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto">00</div>
-                    <p class="timer-label text-xs sm:text-sm mt-2">DÍAS</p>
+                    <div id="days" class="timer-circle">00</div>
+                    <p class="timer-label">DAYS</p>
                 </div>
                 <div>
-                    <div id="hours" class="timer-circle text-3xl sm:text-4xl font-bold w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto">00</div>
-                    <p class="timer-label text-xs sm:text-sm mt-2">HORAS</p>
+                    <div id="hours" class="timer-circle">00</div>
+                    <p class="timer-label">HOURS</p>
                 </div>
                 <div>
-                    <div id="minutes" class="timer-circle text-3xl sm:text-4xl font-bold w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto">00</div>
-                    <p class="timer-label text-xs sm:text-sm mt-2">MINUTOS</p>
+                    <div id="minutes" class="timer-circle">00</div>
+                    <p class="timer-label">MINUTES</p>
                 </div>
                 <div>
-                    <div id="seconds" class="timer-circle text-3xl sm:text-4xl font-bold w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto">00</div>
-                    <p class="timer-label text-xs sm:text-sm mt-2">SEGUNDOS</p>
+                    <div id="seconds" class="timer-circle">00</div>
+                    <p class="timer-label">SECONDS</p>
                 </div>
             </div>
 
-            <!-- Formulario de Suscripción (Opcional) -->
-            <p class="text-sm text-gray-300 mb-3">
+            <p class="subscribe-prompt"> {/* Nueva clase para este texto */}
               Be the first to know when we launch.
             </p>
-            <form id="subscribeForm" class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
+            <form id="subscribeForm" class="subscribe-form">
                 <input 
                     type="email" 
                     id="emailInput"
                     name="email" 
                     placeholder="Tu correo electrónico" 
                     required
-                    class="email-input flex-grow px-4 py-2.5 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-iepp-yellow)]"
+                    class="email-input"
                 >
                 <button 
                     type="submit"
-                    class="font-semibold px-6 py-2.5 rounded-md transition-colors duration-300"
+                    class="subscribe-button" 
                     style="background-color: var(--color-iepp-yellow); color: var(--color-iepp-blue);"
                     onmouseover="this.style.backgroundColor='#E0D104'" 
                     onmouseout="this.style.backgroundColor='var(--color-iepp-yellow)'"
+                    
                 >
                     SUBSCRIBE
                 </button>
             </form>
-            <p id="formMessage" class="mt-3 text-sm h-5"></p> <!-- Para mensajes de éxito/error -->
+            <p id="formMessage" class="form-message-style"></p> {/* Clase para el mensaje */}
 
         </div>
     </div>
 
     <script>
         // --- CONFIGURACIÓN DE LA CUENTA REGRESIVA ---
-        // ¡¡¡CAMBIA ESTA FECHA A TU FECHA DE LANZAMIENTO!!!
-        const countdownDate = new Date("Jun 30, 2025 23:59:59").getTime();
+        const countdownDate = new Date("Jun 30, 2025 23:59:59").getTime(); // ¡¡TU FECHA!!
 
         const countdownFunction = setInterval(function() {
             const now = new Date().getTime();
@@ -125,34 +90,28 @@
 
             if (distance < 0) {
                 clearInterval(countdownFunction);
-                document.getElementById("countdown").innerHTML = "<p class='col-span-4 text-2xl font-bold' style='color: var(--color-iepp-yellow);'>¡HEMOS LANZADO!</p>";
+                const countdownElem = document.getElementById("countdown");
+                // Estilo para el mensaje de lanzamiento
+                countdownElem.innerHTML = "<p style='grid-column: span 4 / span 4; font-size: 1.5rem; font-weight: 700; color: var(--color-iepp-yellow);'>¡HEMOS LANZADO!</p>";
             }
         }, 1000);
 
-        // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN (Ejemplo Simple) ---
-        // Para un formulario real, necesitarás un backend o un servicio como Mailchimp, SendGrid, etc.
-        // Este es solo un ejemplo para mostrar un mensaje.
+        // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN ---
         const form = document.getElementById('subscribeForm');
         const formMessage = document.getElementById('formMessage');
         const emailInput = document.getElementById('emailInput');
 
         form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Previene el envío real del formulario
+            event.preventDefault(); 
             
-            // Validación simple
             if (!emailInput.value || !emailInput.checkValidity()) {
                 formMessage.textContent = 'Por favor, introduce un email válido.';
-                formMessage.style.color = 'var(--color-iepp-yellow)'; // O un color de error
+                formMessage.style.color = 'var(--color-iepp-yellow)';
                 return;
             }
-
-            // Aquí iría la lógica para enviar el email a tu backend/servicio
-            // console.log("Email a suscribir:", emailInput.value); 
-
             formMessage.textContent = '¡Gracias por suscribirte!';
-            formMessage.style.color = 'var(--color-iepp-yellow)'; // Color de éxito
-            emailInput.value = ''; // Limpia el input
-
+            formMessage.style.color = 'var(--color-iepp-yellow)';
+            emailInput.value = ''; 
             setTimeout(() => {
                 formMessage.textContent = '';
             }, 3000);
