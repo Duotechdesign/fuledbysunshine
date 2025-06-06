@@ -1,22 +1,44 @@
 /* style.css */
+/* style.css */
 
-/* Define tus variables de color IEPP globalmente si quieres */
+@font-face {
+    font-family: 'Misrow'; /* El nombre que usarás en tu CSS */
+    src: url('./assets/MisrowDemo.otf') format('opentype'); /* Ruta RELATIVA al archivo de fuente */
+    /* Si tuvieras otros formatos, los añadirías aquí:
+    src: url('./assets/MisrowDemo.woff2') format('woff2'),
+         url('./assets/MisrowDemo.otf') format('opentype'),
+         url('./assets/MisrowDemo.ttf') format('truetype');
+    */
+    font-weight: normal; /* O el peso que corresponda a este archivo de fuente */
+    font-style: normal;  /* O italic si es una fuente itálica */
+    font-display: swap; /* Buena práctica para el rendimiento de carga de fuentes */
+}
+
 :root {
-    --color-iepp-blue: #0C0F40;
-    --color-iepp-yellow: #F2E205; /* Tu amarillo corporativo principal */
-    /* --color-iepp-yellow-button: #EEBF48; */ /* Si quieres un amarillo específico para el botón */
-
-    --color-text-on-dark: #FFFFFF;
-    --color-text-muted-on-dark: #D1D5DB; /* Tailwind gray-300 */
-    --color-placeholder-on-dark: rgba(209, 213, 219, 0.7); /* Un gris más claro para placeholder */
+    --color-brand-yellow: #EEBF48;
+    /* ... tus otras variables de color ... */
+    --font-primary: 'Misrow', sans-serif; /* Define Misrow como fuente primaria */
+    --font-secondary: 'Poppins', sans-serif; /* Ejemplo de fuente secundaria si la necesitas */
 }
 
 body {
-  font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; /* Asumiendo que tienes Satoshi o una fuente similar */
-    background-color: var(--color-iepp-blue); /* Fondo general azul oscuro */
-    color: var(--color-text-on-dark);
-    margin: 0;
-    line-height: 1.6;
+    font-family: var(--font-secondary); /* O var(--font-primary) si quieres Misrow por defecto */
+    /* ... resto de tus estilos de body ... */
+}
+
+/* ... resto de tu style.css ... */
+
+/* Ejemplo de cómo aplicar Misrow a un elemento específico */
+.main-title {
+    font-family: var(--font-primary); /* Usa Misrow para el título principal */
+    color: var(--color-brand-yellow);
+    /* ... otros estilos para .main-title ... */
+}
+
+/* Si quieres que los números de la cuenta regresiva usen Misrow */
+.timer-circle {
+    font-family: var(--font-primary);
+    /* ... otros estilos para .timer-circle ... */
 }
 .background-container {
     /* background-image se establece inline en el HTML */

@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Próximamente - Fuled by Sunshine</title>
-     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css"> 
-  
-</head><body>
+    {/* Si tienes definiciones @font-face en un fonts.css separado, enlaza ese también: */}
+    {/* <link rel="stylesheet" href="./assets/fonts.css"> */}
+</head>
+<body>
 
     <div 
         class="background-container"
-        style="background-image: url('/assets/img.webp');"  /* RUTA CORRECTA */
+        style="background-image: url('./assets/img.webp');"  {/* RUTA RELATIVA */}
+    >
     >
         <div class="background-overlay"></div>
 
         <div class="content-box">
             
-            <!-- <img src="./assets/logo.svg" alt="IEPP Logo" class="logo-image"> --> {/* Clase CSS para logo si lo añades */}
+         
 
             <h1 class="main-title">
               Cooking up something SPECIAL!
