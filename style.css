@@ -127,38 +127,48 @@ body, html {
     line-height: 1.4;
 }
 
-/* --- ESTILOS DEL FORMULARIO (INPUT Y BOTÓN SEPARADOS) --- */
-.subscribe-form {
-    display: flex;
-    gap: 10px; /* Espacio entre input y botón */
-    align-items: stretch; /* Misma altura para input y botón */
-    max-width: 480px;
+/* --- ESTILOS DEL FORMULARIO (INPUT Y BOTÓN SEPARADOS) --- */.subscribe-form {
+    display: flex; /* Mantiene input y botón en línea */
+    max-width: 480px; /* O el ancho que desees para el conjunto */
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
-    /* No necesita borde ni overflow aquí si los elementos son independientes */
+    /* No hay 'gap' entre ellos */
+    /* El borde exterior y el radio se gestionarán individualmente
+       para lograr el efecto de la imagen que adjuntaste. */
 }
 
 .email-input {
-    flex-grow: 1;
+    flex-grow: 1; /* El input toma el espacio principal */
     padding: 12px 20px;
     font-size: clamp(0.9rem, 2.5vw, 1rem);
-    color: var(--input-text-on-light-panel); /* Texto oscuro */
+    color: var(--input-text-on-light-panel);
     background-color: rgba(255, 255, 255, 0.35); /* Fondo blanco translúcido */
-    border: 1.5px solid rgba(255, 255, 255, 0.5); /* Borde blanco */
-    border-radius: var(--form-pill-radius); /* Radio completo */
+
+    /* Borde amarillo solo en el lado izquierdo, arriba y abajo */
+    border: 1.5px solid var(--brand-yellow);
+    border-right: none; /* Sin borde derecho para que se una al botón */
+
+    /* Radios solo en el lado izquierdo */
+    border-top-left-radius: var(--form-pill-radius);
+    border-bottom-left-radius: var(--form-pill-radius);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
     outline: none;
-    transition: background-color 0.3s, border-color 0.3s;
+    transition: background-color 0.3s;
+    position: relative; /* Para z-index y asegurar que no haya artefactos visuales */
+    z-index: 1;
 }
 
 .email-input::placeholder {
-    color: var(--placeholder-text-on-light-panel); /* Placeholder oscuro */
+    color: var(--placeholder-text-on-light-panel);
     opacity: 1;
 }
 
 .email-input:focus {
     background-color: rgba(255, 255, 255, 0.5);
-    border-color: var(--brand-yellow); /* Borde amarillo al hacer focus */
+    /* El borde ya está definido, no necesita cambiar en focus a menos que lo desees */
 }
 
 .subscribe-button {
@@ -168,66 +178,71 @@ body, html {
     font-weight: normal; /* AceSans podría tener solo un peso */
     color: var(--button-text-on-yellow); /* Texto oscuro */
     background-color: var(--brand-yellow); /* Fondo amarillo */
-    border: none; /* Botón sin borde, solo fondo */
-    border-radius: var(--form-pill-radius); /* Radio completo */
+
+    /* Borde amarillo solo en el lado derecho, arriba y abajo.
+       El color del borde debe ser el mismo que el del fondo del botón
+       para que parezca que no hay borde entre ellos si es lo que buscas,
+       o el mismo color del borde del input para continuidad.
+       Por la imagen, parece que el borde amarillo continúa. */
+    border-top: 1.5px solid var(--brand-yellow);
+    border-bottom: 1.5px solid var(--brand-yellow);
+    border-right: 1.5px solid var(--brand-yellow);
+    border-left: none; /* Sin borde izquierdo */
+                       /* Si el input tiene border-right: none, y este tiene border-left:none,
+                          el color de fondo del botón se unirá al área del input. */
+
+
+    /* Radios solo en el lado derecho */
+    border-top-right-radius: var(--form-pill-radius);
+    border-bottom-right-radius: var(--form-pill-radius);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 0.03em;
     transition: background-color 0.3s, transform 0.1s;
     white-space: nowrap;
+
+    /* Para que el botón "pise" el espacio del borde si es necesario y evitar gaps */
+    margin-left: -1.5px; /* Empuja el botón sobre el espacio del borde derecho del input (que no existe)
+                            Esto ayuda a que los fondos se toquen si `border-right: none` y `border-left: none`
+                            y los bordes visibles son solo los exteriores.
+                            Asegúrate que coincida con el border-width. */
+    position: relative;
+    z-index: 2; /* Para que esté visualmente por encima en la unión */
 }
 /* --- FIN DE ESTILOS DEL FORMULARIO --- */
 
-.subscribe-button:hover {
-    background-color: #dbc041;
-}
-.subscribe-button:active {
-    transform: scale(0.96);
-}
 
-.form-message-style {
-    font-size: 0.9rem;
-    min-height: 1.2em;
-    font-weight: 500;
-}
-
-.logo-container {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-}
-
-.footer-logo {
-    /* AUMENTADO EL TAMAÑO DEL SVG */
-    width: clamp(70px, 15vw, 90px); /* Aumentado: min 70px, preferido 15% viewport, max 90px */
-    height: auto;
-    opacity: 0.9;
-    filter: brightness(0) invert(1); /* Para hacerlo blanco */
-}
+/* ... (Resto del CSS como .subscribe-button:hover, .form-message-style, .logo-container, .footer-logo se queda igual) ... */
 
 /* Media Queries (Ajuste para el formulario apilado) */
 @media (max-width: 600px) {
-    .content-box {
-        padding: clamp(20px, 5vw, 30px) clamp(15px, 4vw, 25px);
-    }
-    /* ... otros estilos responsivos para título, countdown, etc. ... */
+    /* ... (Estilos para .content-box, etc. se quedan igual) ... */
+
     .subscribe-form {
         flex-direction: column; /* Apilar input y botón */
-        /* gap: 10px; ya está definido */
+        gap: 10px; /* Espacio entre input y botón en móvil */
+        /* Ya no se aplica el estilo de "píldora unida", así que no hay borde unificado */
     }
-    .email-input, .subscribe-button {
+
+    .email-input {
         width: 100%;
         box-sizing: border-box;
+        border-radius: var(--form-pill-radius); /* Radio completo en móvil */
+        border-right: 1.5px solid var(--brand-yellow); /* Borde derecho restaurado para el input */
+        /* margin-bottom: 10px; // El gap del form ya debería manejar esto */
     }
-    /* No se necesitan cambios específicos de borde/radio aquí
-       porque ya tienen su estilo individual por defecto. */
 
-    .logo-container {
-        bottom: 20px;
+    .subscribe-button {
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: var(--form-pill-radius); /* Radio completo en móvil */
+        border: 1.5px solid var(--brand-yellow); /* Borde completo para el botón en móvil, o solo border:none si prefieres */
+                                               /* Si es border: none, el color de fondo es suficiente */
+        margin-left: 0; /* Resetear el margen negativo que no aplica en modo columna */
     }
-    .footer-logo {
-        width: clamp(60px, 18vw, 75px); /* Ajuste de tamaño para móviles */
-    }
+
+    /* ... (Estilos para .logo-container, .footer-logo en móvil se quedan igual) ... */
 }
