@@ -8,57 +8,57 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- No necesitas cargar AceSans desde Google Fonts si la tienes localmente, se hará con @font-face en CSS -->
 </head>
 <body>
 
     <div
         class="background-container"
-        style="background-image: url('./assets/bgImg.webp');" {/* CORREGIDO: usa bgImg.webp */}
+        style="background-image: url('./assets/bgImg.webp');"
     >
-        {/* Tu .background-overlay actual oscurece el fondo, lo cual está bien para el contraste */}
-        <div class="background-overlay"></div>
+        <!-- Este overlay es opcional, si la imagen ya tiene la opacidad deseada o se controla diferente -->
+        <!-- <div class="background-overlay"></div> -->
 
         <div class="content-box">
             <h1 class="main-title">
               COOKING UP SOMETHING SPECIAL!
             </h1>
+
             <div id="countdown" class="countdown-grid">
-                {/* La estructura que tienes aquí con los divs para days, hours, etc., es correcta */}
-                <div class="timer-item"> {/* Añadimos timer-item para consistencia con CSS de referencia */}
-                    <div id="days" class="timer-circle">00</div>
+                <div class="timer-item">
+                    <div id="days" class="timer-value">00</div> {/* El número va aquí dentro */}
                     <p class="timer-label">DAYS</p>
                 </div>
                 <div class="timer-item">
-                    <div id="hours" class="timer-circle">00</div>
+                    <div id="hours" class="timer-value">00</div>
                     <p class="timer-label">HOURS</p>
                 </div>
                 <div class="timer-item">
-                    <div id="minutes" class="timer-circle">00</div>
-                    <p class="timer-label">MINS</p> {/* Ajusta a MINS si lo prefieres como en la imagen de referencia */}
+                    <div id="minutes" class="timer-value">00</div>
+                    <p class="timer-label">MINS</p>
                 </div>
                 <div class="timer-item">
-                    <div id="seconds" class="timer-circle">00</div>
+                    <div id="seconds" class="timer-value">00</div>
                     <p class="timer-label">SECONDS</p>
                 </div>
             </div>
+
             <p class="subscribe-prompt">Be the first to know when we launch.</p>
+
             <form id="subscribeForm" class="subscribe-form">
-                <input type="email" id="emailInput" name="email" placeholder="Your email address..." required class="email-input"> {/* Placeholder en inglés como en la imagen de ref */}
+                <input type="email" id="emailInput" name="email" placeholder="Your email address..." required class="email-input">
                 <button type="submit" class="subscribe-button">SUBSCRIBE</button>
             </form>
             <p id="formMessage" class="form-message-style"></p>
 
-            {/* Añadir el logo SVG */}
             <div class="logo-container">
                 <img src="./assets/hf.svg" alt="Fuled by Sunshine Logo" class="footer-logo">
             </div>
         </div>
     </div>
+
     <script>
         // --- CONFIGURACIÓN DE LA CUENTA REGRESIVA ---
-        // ¡¡IMPORTANTE!! CAMBIA ESTA FECHA A TU FECHA DE LANZAMIENTO
-        const countdownDate = new Date("Dec 31, 2024 23:59:59").getTime();
+        const countdownDate = new Date("Dec 31, 2024 23:59:59").getTime(); // ¡¡TU FECHA DE LANZAMIENTO!!
 
         const countdownFunction = setInterval(function() {
             const now = new Date().getTime();
@@ -69,7 +69,7 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Asegúrate de que los IDs coincidan si cambiaste algo
+            // Seleccionar los elementos CORRECTOS para mostrar los números
             const daysElem = document.getElementById("days");
             const hoursElem = document.getElementById("hours");
             const minutesElem = document.getElementById("minutes");
@@ -80,12 +80,18 @@
             if (minutesElem) minutesElem.innerHTML = String(minutes).padStart(2, '0');
             if (secondsElem) secondsElem.innerHTML = String(seconds).padStart(2, '0');
 
-
             if (distance < 0) {
                 clearInterval(countdownFunction);
-                const countdownElem = document.getElementById("countdown");
-                if (countdownElem) {
-                     countdownElem.innerHTML = "<p style='grid-column: span 4 / span 4; font-size: 1.5rem; font-weight: 700; color: var(--color-brand-yellow);'>¡WE ARE LIVE!</p>";
+                const countdownContainer = document.getElementById("countdown");
+                if (countdownContainer) {
+                    // Si la cuenta termina, puedes ocultarla o mostrar un mensaje diferente
+                    // Por ahora, solo la detendremos, no mostraremos "WE ARE LIVE"
+                    // countdownContainer.innerHTML = "<p class='launch-message'>¡LANZADO!</p>";
+                    // O simplemente ocultar los números y etiquetas si quieres que el form siga visible
+                     if (daysElem) daysElem.innerHTML = "00";
+                     if (hoursElem) hoursElem.innerHTML = "00";
+                     if (minutesElem) minutesElem.innerHTML = "00";
+                     if (secondsElem) secondsElem.innerHTML = "00";
                 }
             }
         }, 1000);
@@ -94,58 +100,44 @@
         const form = document.getElementById('subscribeForm');
         const formMessage = document.getElementById('formMessage');
         const emailInput = document.getElementById('emailInput');
-        const submitButton = form.querySelector('.subscribe-button'); // Asumiendo que el botón tiene esta clase
+        const submitButton = form.querySelector('.subscribe-button');
 
-        // URL de tu backend sender.go (ajusta si es necesario)
-        const BACKEND_URL = '/api/subscribe'; // Cambia esto cuando despliegues tu backend
+        const BACKEND_URL = '/api/subscribe'; // Ajusta cuando sea necesario
 
         if (form) {
             form.addEventListener('submit', async function(event) {
                 event.preventDefault();
-
-                if (!emailInput.value || !emailInput.checkValidity()) {
+                if (!emailInput.checkValidity()) {
                     formMessage.textContent = 'Please enter a valid email address.';
-                    formMessage.style.color = 'var(--color-brand-yellow)';
+                    formMessage.style.color = 'var(--brand-yellow)'; // O un color de error específico
                     return;
                 }
-
                 const originalButtonText = submitButton.textContent;
                 submitButton.textContent = 'SENDING...';
                 submitButton.disabled = true;
                 formMessage.textContent = '';
-
                 try {
-                    const response = await fetch(BACKEND_URL, { // ¡Asegúrate que BACKEND_URL esté definido!
+                    const response = await fetch(BACKEND_URL, {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email: emailInput.value })
                     });
-
-                    // Asumiendo que tu backend devuelve JSON
-                    // Si no devuelve JSON o no devuelve nada, esta parte puede fallar
-                    const result = await response.json().catch(() => ({})); // Intenta parsear, si falla, objeto vacío
-
+                    const result = await response.json().catch(() => ({}));
                     if (response.ok) {
                         formMessage.textContent = result.message || 'Thanks for subscribing!';
-                        formMessage.style.color = 'var(--color-brand-yellow)';
+                        formMessage.style.color = 'var(--brand-yellow)'; // Usar color amarillo para éxito
                         emailInput.value = '';
                     } else {
                         formMessage.textContent = result.error || 'Oops! Something went wrong.';
-                        formMessage.style.color = '#FF6B6B'; // Un color de error
+                        formMessage.style.color = '#FF6B6B'; // Rojo para error
                     }
-
                 } catch (error) {
-                    console.error('Error submitting form:', error);
-                    formMessage.textContent = 'Could not connect. Please try again later.'; // Mensaje más genérico
+                    formMessage.textContent = 'Could not connect. Please try again later.';
                     formMessage.style.color = '#FF6B6B';
                 } finally {
                     submitButton.textContent = originalButtonText;
                     submitButton.disabled = false;
-                    setTimeout(() => {
-                        if(formMessage) formMessage.textContent = '';
-                    }, 5000);
+                    setTimeout(() => { if (formMessage) formMessage.textContent = ''; }, 5000);
                 }
             });
         }

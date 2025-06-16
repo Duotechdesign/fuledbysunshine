@@ -1,88 +1,102 @@
-/* style.css - Para "Fuled by Sunshine" */
+/* style.css */
 
-/* Definición de la fuente personalizada */
 @font-face {
-    font-family: 'AceSans'; /* Nombre que usarás en CSS */
-    src: url('./assets/AceSans-FREE.otf') format('opentype'); /* Ruta a tu archivo de fuente */
-    font-weight: normal; /* O el peso que corresponda si tienes varios archivos */
+    font-family: 'AceSans';
+    src: url('./assets/AceSans-FREE.otf') format('opentype');
+    font-weight: normal;
     font-style: normal;
 }
 
 :root {
-    --color-brand-yellow: #EEBF48;
-    /* Colores para el estilo de la imagen de referencia (claro sobre oscuro) */
-    --color-text-on-frosted: #FFFFFF; /* Texto blanco */
-    --color-text-muted-on-frosted: rgba(255, 255, 255, 0.75); /* Blanco translúcido para etiquetas */
-    --color-placeholder-on-frosted: rgba(255, 255, 255, 0.6); /* Para el placeholder del input */
-    --color-button-text-on-yellow: #1A1A1A; /* Texto oscuro para el botón amarillo */
+    /* Color principal amarillo/dorado de la referencia */
+    --brand-yellow: #F2CA50; /* Actualizado al color que mencionaste */
 
-    --color-body-bg: #111827; /* Fondo oscuro si la imagen no cubre todo */
-    /* El content-box bg será oscuro para que el texto blanco resalte, como en la imagen de ref. */
-    --content-box-bg: rgba(0, 0, 0, 0.35); /* Negro con 35% opacidad */
-    --content-box-border: rgba(255, 255, 255, 0.18); /* Borde blanco translúcido sutil */
+    /* Panel esmerilado claro */
+    --content-box-bg: rgba(231, 231, 231, 0.20); /* #E7E7E7 con 20% opacidad */
+    --content-box-border: rgba(255, 255, 255, 0.3); /* Borde blanco sutil para el panel claro */
 
-    --input-bg-frosted: rgba(255, 255, 255, 0.1); /* Fondo del input sobre el content-box */
-    --input-border-frosted: rgba(255, 255, 255, 0.3);
+    /* Textos sobre el panel claro */
+    /* El título principal "COOKING UP..." es --brand-yellow */
+    /* Números del timer son --brand-yellow */
+    --timer-label-text: rgba(255, 255, 255, 0.85); /* Etiquetas DAYS, HOURS (blanco/casi opaco) */
+    /* "Be the first to know..." es --brand-yellow */
+    --placeholder-text-on-light-panel: rgba(0, 0, 0, 0.4); /* Placeholder oscuro sobre panel claro */
+    --input-text-on-light-panel: #333333; /* Texto que se escribe en el input */
 
-    --font-title: 'AceSans', 'Poppins', sans-serif; /* AceSans primero, Poppins como fallback */
+    /* Botón */
+    --button-text-on-yellow: #3A2E0A; /* Texto oscuro para el botón amarillo */
+
+    /* Otros */
+    --body-bg-fallback: #333333; /* Si la imagen de fondo no carga */
+    --font-title: 'AceSans', 'Poppins', sans-serif;
     --font-body: 'Poppins', sans-serif;
 }
 
-body {
-    font-family: var(--font-body);
-    background-color: var(--color-body-bg);
-    color: var(--color-text-on-frosted); /* Color por defecto */
+body, html {
     margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: var(--font-body);
+    background-color: var(--body-bg-fallback);
     line-height: 1.6;
-    min-height: 100vh; /* Asegurar que el body ocupe al menos toda la altura */
+    color: #FFFFFF; /* Color de texto por defecto si algo queda fuera */
 }
 
 .background-container {
+    width: 100%;
+    min-height: 100vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 100vh;
+    /* Opacidad de la imagen de fondo al 75% */
+    /* Si la imagen no tiene alfa, puedes usar un pseudo-elemento o un div wrapper */
+    /* Opción 1: Aplicar directamente si es un <img> y no background-image */
+    /* Opción 2: Usar un overlay sutil para simularlo */
+    opacity: 0.9; /* REDUCE ESTO A 0.75 SI LA IMAGEN ES MUY OSCURA. Si es clara, este valor puede ser mayor. Prueba y ajusta. */
+                   /* Si este 'opacity' afecta al .content-box (lo hará si no está posicionado absolute), es mejor usar un overlay. */
+                   /* Vamos a quitar el overlay por ahora y ver cómo se ve con solo opacity aquí. */
+                   /* Si esto hace que el content-box también sea translúcido de forma no deseada, volveremos al overlay. */
+
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    padding: 1rem; /* o 20px */
-    box-sizing: border-box; /* Importante para que el padding no aumente el tamaño total */
-    position: relative;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative; /* Para el .content-box */
 }
 
+/* Si la opacidad en .background-container afecta negativamente, usa este overlay: */
+/*
 .background-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.30); /* Oscurece un poco el fondo para contraste. AJUSTA ESTO */
-    z-index: 1;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.25); // (1 - 0.75 de opacidad deseada)
+    z-index: 0; // Detrás del content-box
 }
+*/
 
 .content-box {
-    position: relative;
-    z-index: 2;
-    background-color: var(--content-box-bg); /* Fondo oscuro translúcido */
-    backdrop-filter: blur(15px); /* Ajusta el valor del blur a tu gusto */
-    -webkit-backdrop-filter: blur(15px);
-    border-radius: 20px; /* 0.75rem es 12px, la imagen parece tener más, unos 20px */
-    border: 1px solid var(--content-box-border);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-    padding: clamp(25px, 5vw, 40px) clamp(30px, 6vw, 50px); /* Padding responsive */
-    max-width: 580px; /* Ancho máximo */
-    width: 90%;
+    position: relative; /* O absolute si el padre es el viewport y quieres centrarlo así */
+    z-index: 1; /* Encima del overlay si se usa */
+    background-color: var(--content-box-bg);
+    backdrop-filter: blur(12px); /* Ajusta el valor del blur como en la imagen */
+    -webkit-backdrop-filter: blur(12px);
+    padding: clamp(30px, 6vw, 50px);
+    border-radius: 15px; /* Bordes redondeados del panel */
+    border: 1px solid var(--content-box-border); /* Borde blanco sutil */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Sombra más sutil para panel claro */
     text-align: center;
+    max-width: 620px; /* Ancho del panel */
+    width: 90%;
 }
 
 .main-title {
-    font-family: var(--font-title); /* Usa la fuente AceSans */
-    color: var(--color-brand-yellow);
-    font-size: clamp(2rem, 6vw, 2.8rem); /* Tamaño responsive para el título */
-    font-weight: normal; /* AceSans FREE puede que solo tenga un peso */
+    font-family: var(--font-title);
+    font-size: clamp(1.8rem, 5vw, 2.6rem); /* Ajusta según AceSans */
+    font-weight: normal; /* AceSans puede tener solo un peso */
+    color: var(--brand-yellow);
     margin-top: 0;
-    margin-bottom: clamp(25px, 5vh, 40px);
+    margin-bottom: 30px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     line-height: 1.2;
@@ -90,156 +104,157 @@ body {
 
 .countdown-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(10px, 2vw, 20px);
-    margin-bottom: clamp(25px, 5vh, 40px);
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(15px, 3vw, 25px);
+    margin-bottom: 35px;
 }
 
-.timer-item { /* Contenedor para cada unidad del timer, si lo usaste en HTML */
+.timer-item {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.timer-circle { /* El círculo con el número */
-    border: 2px solid var(--color-text-muted-on-frosted); /* Borde blanco translúcido */
-    color: var(--color-brand-yellow); /* Números en amarillo */
-    font-family: var(--font-body); /* O var(--font-title) si quieres la misma que el título */
-    font-size: clamp(2rem, 7vw, 3rem);
-    font-weight: 500; /* Poppins 500 */
-    width: clamp(60px, 16vw, 85px);
-    height: clamp(60px, 16vw, 85px);
-    border-radius: 50%; /* Círculo perfecto */
+.timer-value { /* Contenedor del número */
+    font-family: var(--font-body); /* O --font-title si quieres AceSans para números */
+    font-size: clamp(2.2rem, 7vw, 3.2rem);
+    font-weight: 500; /* Poppins medium */
+    color: var(--brand-yellow); /* Números en amarillo */
+    width: clamp(65px, 15vw, 80px); /* Tamaño del círculo */
+    height: clamp(65px, 15vw, 80px);
+    border: 2px solid rgba(255, 255, 255, 0.9); /* Borde blanco para los círculos */
+    border-radius: 50%;
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 8px; /* Espacio entre círculo y etiqueta */
-    background-color: rgba(0,0,0,0.1); /* Fondo muy sutil para el círculo */
+    align-items: center;
+    margin-bottom: 8px;
+    /* background-color: rgba(255,255,255,0.05); Sutil fondo si se desea, pero la imagen ref no lo tiene */
 }
 
 .timer-label {
-    color: var(--color-text-muted-on-frosted);
-    font-size: clamp(0.6rem, 2.5vw, 0.8rem);
-    margin-top: 0; /* Ya hay margin-bottom en timer-circle */
+    font-size: clamp(0.65rem, 2vw, 0.8rem);
+    font-weight: 400; /* Poppins regular o light */
+    color: var(--timer-label-text); /* Blanco/casi opaco */
     text-transform: uppercase;
-    letter-spacing: 0.1em; /* Un poco más de espaciado */
-    font-weight: 300; /* Poppins 300 */
+    letter-spacing: 0.1em;
 }
 
 .subscribe-prompt {
-    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-    color: var(--color-text-on-frosted);
-    margin-bottom: clamp(20px, 4vh, 30px);
-    font-weight: 400; /* Poppins 400 */
-    line-height: 1.5;
+    font-family: var(--font-title); /* Usar AceSans */
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    font-weight: normal;
+    color: var(--brand-yellow); /* Amarillo */
+    margin-bottom: 25px;
+    line-height: 1.4;
 }
 
 .subscribe-form {
-    display: flex;
+    display: flex; /* Para poner input y botón en línea */
     gap: 10px;
-    max-width: 26rem; /* Un poco más de ancho para el form */
+    align-items: stretch; /* Para que input y botón tengan la misma altura */
+    max-width: 480px; /* Ancho del formulario */
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: clamp(15px, 3vh, 25px);
-    align-items: center; /* Alinea verticalmente input y botón si están en la misma fila */
+    margin-bottom: 20px;
 }
 
 .email-input {
-    background-color: var(--input-bg-frosted);
-    border: 1px solid var(--input-border-frosted);
-    color: var(--color-text-on-frosted); /* Texto que se escribe será blanco */
-    flex-grow: 1;
-    padding: 12px 20px; /* Ajusta padding */
-    border-radius: 50px; /* Muy redondeado como en la imagen */
+    flex-grow: 1; /* Ocupa el espacio disponible */
+    padding: 10px 18px;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    color: var(--input-text-on-light-panel); /* Texto oscuro */
+    background-color: rgba(255, 255, 255, 0.35); /* Fondo blanco translúcido para el input */
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Borde blanco más visible */
+    border-radius: 25px; /* Bordes redondeados */
     outline: none;
-    font-size: clamp(0.85rem, 3vw, 1rem);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.3s, background-color 0.3s;
 }
+
 .email-input::placeholder {
-    color: var(--color-placeholder-on-frosted); /* Placeholder blanco translúcido */
+    color: var(--placeholder-text-on-light-panel); /* Placeholder oscuro */
+    opacity: 1; /* Asegurar que sea visible */
 }
+
 .email-input:focus {
-    border-color: var(--color-brand-yellow);
-    box-shadow: 0 0 0 2px rgba(238, 191, 72, 0.4);
+    background-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--brand-yellow);
 }
 
 .subscribe-button {
-    background-color: var(--color-brand-yellow);
-    color: var(--color-button-text-on-yellow);
-    font-family: var(--font-body); /* O var(--font-title) */
-    font-weight: 700; /* Poppins 700 o 600 */
-    padding: 12px 25px;
-    border-radius: 50px; /* Muy redondeado */
-    transition: background-color 0.3s ease, transform 0.1s ease;
-    cursor: pointer;
+    padding: 10px 25px;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    font-weight: 600; /* Poppins semibold */
+    color: var(--button-text-on-yellow);
+    background-color: var(--brand-yellow);
     border: none;
+    border-radius: 25px; /* Mismo radio que el input */
+    cursor: pointer;
     text-transform: uppercase;
-    font-size: clamp(0.85rem, 3vw, 1rem);
-    letter-spacing: 0.5px;
+    letter-spacing: 0.03em;
+    transition: background-color 0.3s, transform 0.1s;
+    white-space: nowrap; /* Evitar que el texto del botón se parta */
 }
+
 .subscribe-button:hover {
-    background-color: #d9a937; /* Amarillo un poco más oscuro */
+    background-color: #dbc041; /* Amarillo un poco más oscuro */
 }
 .subscribe-button:active {
-    transform: scale(0.97);
+    transform: scale(0.96);
 }
 
 .form-message-style {
-    margin-top: 0.75rem;
     font-size: 0.9rem;
-    min-height: 1.3em;
+    min-height: 1.2em;
     font-weight: 500;
-    color: var(--color-brand-yellow); /* Color del mensaje por defecto, se puede cambiar en JS */
+    /* El color se define en JS, pero un default puede ser: */
+    /* color: var(--input-text-on-light-panel); */
 }
 
 .logo-container {
-    margin-top: clamp(20px, 4vh, 30px);
+    margin-top: 30px;
 }
+
 .footer-logo {
-    width: clamp(45px, 10vw, 65px); /* Ajusta el tamaño del logo */
+    width: clamp(50px, 12vw, 70px); /* Tamaño del logo */
     height: auto;
-    opacity: 0.85; /* Sutilmente visible */
+    opacity: 0.9; /* Opacidad del logo */
+    filter: brightness(0) invert(1); /* Para hacer el SVG blanco si es negro originalmente */
 }
 
-/* Media Queries (Mantén las tuyas o adapta estas) */
-@media (max-width: 600px) { /* Cambiado a max-width para mobile-first approach si prefieres */
-    .subscribe-form {
-        flex-direction: column; /* Apila input y botón */
-    }
-    .email-input, .subscribe-button {
-        width: 100%;
-        box-sizing: border-box;
-    }
-    .subscribe-button {
-      margin-top: 10px; /* Espacio si se apilan */
-    }
-}
-
-/* Puedes añadir más media queries si es necesario */
-@media (max-width: 400px) {
+/* Media Queries para responsividad */
+@media (max-width: 600px) {
     .content-box {
-        padding: 20px 15px;
-        border-radius: 15px;
-    }
-    .countdown-grid {
-        gap: 8px;
+        padding: clamp(20px, 5vw, 30px) clamp(15px, 4vw, 25px);
     }
     .main-title {
-         margin-bottom: 20px;
-         font-size: 1.8rem; /* Ajuste específico para pantallas muy pequeñas */
+        font-size: clamp(1.6rem, 7vw, 2rem);
+        margin-bottom: 20px;
     }
-     .timer-circle {
-        font-size: 1.8rem;
-        width: 55px;
-        height: 55px;
+    .countdown-grid {
+        gap: 10px;
+        margin-bottom: 25px;
     }
-    .timer-label {
-        font-size: 0.65rem;
+    .timer-value {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+        width: clamp(50px, 18vw, 65px);
+        height: clamp(50px, 18vw, 65px);
     }
     .subscribe-prompt {
-        margin-bottom: 15px;
-        font-size: 0.9rem;
+        font-size: clamp(0.9rem, 4vw, 1rem);
+        margin-bottom: 20px;
+    }
+    .subscribe-form {
+        flex-direction: column; /* Apilar input y botón en móviles */
+        max-width: 100%;
+    }
+    .email-input, .subscribe-button {
+        width: 100%; /* Ocupar todo el ancho disponible */
+        box-sizing: border-box; /* Importante con width 100% y padding */
+    }
+    .subscribe-button {
+        margin-top: 10px; /* Espacio cuando se apilan */
+    }
+    .footer-logo {
+        width: clamp(40px, 15vw, 55px);
     }
 }
