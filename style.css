@@ -1,4 +1,4 @@
-/* style.css (Solo secciones modificadas o relevantes) */
+/* style.css */
 
 @font-face {
     font-family: 'AceSans';
@@ -8,167 +8,226 @@
 }
 
 :root {
-    --brand-yellow: #F2CA50;
-    --content-box-bg: rgba(231, 231, 231, 0.20);
+    --brand-yellow: #F2CA50; /* Amarillo/dorado */
+
+    /* Panel esmerilado claro y textos sobre él */
+    --content-box-bg: rgba(231, 231, 231, 0.20); /* #E7E7E7 con 20% opacidad */
     --content-box-border: rgba(255, 255, 255, 0.3);
-    --timer-label-text: rgba(255, 255, 255, 0.85);
-    --placeholder-text-on-light-panel: rgba(0, 0, 0, 0.4);
-    --input-text-on-light-panel: #333333;
-    --button-text-on-yellow: #3A2E0A;
+    --timer-label-text: rgba(255, 255, 255, 0.85); /* Etiquetas DAYS, HOURS */
+    --placeholder-text-on-light-panel: rgba(0, 0, 0, 0.4); /* Placeholder oscuro */
+    --input-text-on-light-panel: #333333; /* Texto del input */
+    --button-text-on-yellow: #3A2E0A; /* Texto oscuro del botón */
+
     --body-bg-fallback: #333333;
     --font-title: 'AceSans', 'Poppins', sans-serif;
     --font-body: 'Poppins', sans-serif;
-    --form-pill-radius: 30px;
+    --form-pill-radius: 30px; /* Radio para botones/inputs */
 }
 
-body, html { /* Sin cambios */ }
-.background-container { /* Sin cambios, pero asegúrate que tenga position: relative; */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: var(--font-body);
+    background-color: var(--body-bg-fallback);
+    line-height: 1.6;
+    color: #FFFFFF;
+}
+
+.background-container {
     width: 100%;
     min-height: 100vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.9;
+    /* Opacidad de la imagen de fondo: ajusta esto con cuidado.
+       Si la imagen es muy oscura, un valor más bajo (ej. 0.75) la aclarará.
+       Si la imagen es clara, un valor más alto (ej. 0.9 o 1) está bien.
+       Si esto afecta al content-box, considera un pseudo-elemento ::before para el overlay.
+    */
+    /* opacity: 0.85; */ /* Prueba sin esto primero, y luego ajústalo si es necesario */
     display: flex;
-    /* Cambiamos flex-direction para ayudar con el logo abajo, aunque se usará absolute */
     flex-direction: column;
-    justify-content: center; /* Centra el content-box verticalmente */
-    align-items: center; /* Centra el content-box horizontalmente */
+    justify-content: center;
+    align-items: center;
     padding: 20px;
     box-sizing: border-box;
-    position: relative; /* Muy importante para el posicionamiento absoluto del logo */
+    position: relative;
 }
-.content-box { /* Sin cambios */ }
-.main-title { /* Sin cambios */ }
-.countdown-grid { /* Sin cambios */ }
-.timer-item { /* Sin cambios */ }
-.timer-value { /* Sin cambios */ }
+
+.content-box {
+    position: relative;
+    z-index: 1;
+    background-color: var(--content-box-bg); /* Fondo claro esmerilado */
+    backdrop-filter: blur(12px); /* Efecto blur */
+    -webkit-backdrop-filter: blur(12px);
+    padding: clamp(30px, 6vw, 50px);
+    border-radius: 15px; /* Bordes redondeados del panel */
+    border: 1px solid var(--content-box-border); /* Borde blanco sutil */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Sombra sutil */
+    text-align: center;
+    max-width: 620px;
+    width: 90%;
+}
+
+.main-title {
+    font-family: var(--font-title);
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    font-weight: normal;
+    color: var(--brand-yellow); /* Amarillo */
+    margin-top: 0;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+}
+
+.countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(15px, 3vw, 25px);
+    margin-bottom: 35px;
+}
+
+.timer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timer-value {
+    font-family: var(--font-body); /* O --font-title si prefieres AceSans para números */
+    font-size: clamp(2.2rem, 7vw, 3.2rem);
+    font-weight: 500;
+    color: var(--brand-yellow); /* Números en amarillo */
+    width: clamp(65px, 15vw, 80px);
+    height: clamp(65px, 15vw, 80px);
+    border: 2px solid rgba(255, 255, 255, 0.9); /* Borde blanco para círculos */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
 .timer-label {
-    font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+    font-size: clamp(0.75rem, 2.5vw, 0.9rem); /* Tamaño que ya te gustaba */
     font-weight: 400;
-    color: var(--timer-label-text);
+    color: var(--timer-label-text); /* Blanco translúcido */
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
-.subscribe-prompt { /* Sin cambios */ }
 
-/* --- ESTILOS DEL FORMULARIO PARA UNIR INPUT Y BOTÓN COMO EN LA IMAGEN --- */
+.subscribe-prompt {
+    font-family: var(--font-title);
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    font-weight: normal;
+    color: var(--brand-yellow); /* Amarillo */
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+/* --- ESTILOS DEL FORMULARIO (INPUT Y BOTÓN SEPARADOS) --- */
 .subscribe-form {
     display: flex;
-    max-width: 480px; /* O el ancho que desees para el conjunto */
+    gap: 10px; /* Espacio entre input y botón */
+    align-items: stretch; /* Misma altura para input y botón */
+    max-width: 480px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
-    /* El borde y radio se aplicarán individualmente para lograr el efecto "sobrepuesto" */
-    /* No hay 'gap' entre ellos */
+    /* No necesita borde ni overflow aquí si los elementos son independientes */
 }
 
 .email-input {
-    flex-grow: 1; /* El input toma el espacio principal */
+    flex-grow: 1;
     padding: 12px 20px;
     font-size: clamp(0.9rem, 2.5vw, 1rem);
-    color: var(--input-text-on-light-panel);
-    background-color: rgba(255, 255, 255, 0.35);
-    border: 1.5px solid var(--brand-yellow); /* Borde amarillo completo */
-    /* Radios solo en el lado izquierdo */
-    border-top-left-radius: var(--form-pill-radius);
-    border-bottom-left-radius: var(--form-pill-radius);
-    border-top-right-radius: 0; /* Sin radio a la derecha */
-    border-bottom-right-radius: 0; /* Sin radio a la derecha */
-    border-right: none; /* Sin borde derecho para que se una al botón */
+    color: var(--input-text-on-light-panel); /* Texto oscuro */
+    background-color: rgba(255, 255, 255, 0.35); /* Fondo blanco translúcido */
+    border: 1.5px solid rgba(255, 255, 255, 0.5); /* Borde blanco */
+    border-radius: var(--form-pill-radius); /* Radio completo */
     outline: none;
-    transition: background-color 0.3s;
-    position: relative; /* Para z-index si el botón necesita "solaparse" ligeramente */
-    z-index: 1;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 .email-input::placeholder {
-    color: var(--placeholder-text-on-light-panel);
+    color: var(--placeholder-text-on-light-panel); /* Placeholder oscuro */
     opacity: 1;
 }
 
 .email-input:focus {
     background-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--brand-yellow); /* Borde amarillo al hacer focus */
 }
 
 .subscribe-button {
     padding: 12px 25px;
-    font-family: var(--font-title); /* Aplicar la fuente AceSans */
-    font-size: clamp(0.9rem, 2.5vw, 1rem); /* Consistente con el input */
-    font-weight: normal; /* AceSans puede tener solo este peso */
-    color: var(--button-text-on-yellow);
-    background-color: var(--brand-yellow);
-    /* Borde solo en el lado derecho, arriba y abajo para completar el del input */
-    border-top: 1.5px solid var(--brand-yellow);
-    border-bottom: 1.5px solid var(--brand-yellow);
-    border-right: 1.5px solid var(--brand-yellow);
-    border-left: none; /* Sin borde izquierdo para unirse al input */
-    /* Radios solo en el lado derecho */
-    border-top-right-radius: var(--form-pill-radius);
-    border-bottom-right-radius: var(--form-pill-radius);
-    border-top-left-radius: 0; /* Sin radio a la izquierda */
-    border-bottom-left-radius: 0; /* Sin radio a la izquierda */
+    font-family: var(--font-title); /* Fuente AceSans para el botón */
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    font-weight: normal; /* AceSans podría tener solo un peso */
+    color: var(--button-text-on-yellow); /* Texto oscuro */
+    background-color: var(--brand-yellow); /* Fondo amarillo */
+    border: none; /* Botón sin borde, solo fondo */
+    border-radius: var(--form-pill-radius); /* Radio completo */
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 0.03em;
     transition: background-color 0.3s, transform 0.1s;
     white-space: nowrap;
-    /* Para que el botón "monte" ligeramente el input si es necesario */
-    /* Esto ayuda a asegurar que no haya un pixel de separación visual por antialiasing */
-    margin-left: -1.5px; /* Debería coincidir con el grosor del borde (border-width) */
-    position: relative;
-    z-index: 2; /* Para que esté por encima del input si hay solapamiento */
 }
 /* --- FIN DE ESTILOS DEL FORMULARIO --- */
 
-.subscribe-button:hover { /* Sin cambios */ }
-.subscribe-button:active { /* Sin cambios */ }
-.form-message-style { /* Sin cambios */ }
+.subscribe-button:hover {
+    background-color: #dbc041;
+}
+.subscribe-button:active {
+    transform: scale(0.96);
+}
 
-/* --- ESTILOS PARA EL LOGO FUERA Y ABAJO --- */
+.form-message-style {
+    font-size: 0.9rem;
+    min-height: 1.2em;
+    font-weight: 500;
+}
+
 .logo-container {
-    position: absolute; /* Posicionamiento absoluto respecto a .background-container */
-    bottom: 30px; /* Distancia desde el borde inferior del viewport/background-container */
-    left: 50%; /* Centrado horizontal */
-    transform: translateX(-50%); /* Ajuste fino para centrado perfecto */
-    z-index: 10; /* Asegurar que esté por encima de otros elementos si es necesario */
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
 }
 
 .footer-logo {
-    width: clamp(50px, 10vw, 65px); /* Ajusta el tamaño como prefieras */
+    /* AUMENTADO EL TAMAÑO DEL SVG */
+    width: clamp(70px, 15vw, 90px); /* Aumentado: min 70px, preferido 15% viewport, max 90px */
     height: auto;
     opacity: 0.9;
-    filter: brightness(0) invert(1);
+    filter: brightness(0) invert(1); /* Para hacerlo blanco */
 }
 
 /* Media Queries (Ajuste para el formulario apilado) */
 @media (max-width: 600px) {
-    .background-container {
-        /* No es necesario el flex-direction column aquí si el logo ya está absolute */
+    .content-box {
+        padding: clamp(20px, 5vw, 30px) clamp(15px, 4vw, 25px);
     }
-    .content-box { /* Sin cambios, pero revisa si algo se desajusta */ }
+    /* ... otros estilos responsivos para título, countdown, etc. ... */
     .subscribe-form {
         flex-direction: column; /* Apilar input y botón */
-        /* Ya no se aplica el estilo de "píldora unida" */
-        /* Quitamos el margin-left negativo del botón que no aplica aquí */
+        /* gap: 10px; ya está definido */
     }
-    .email-input {
+    .email-input, .subscribe-button {
         width: 100%;
         box-sizing: border-box;
-        border-radius: var(--form-pill-radius); /* Radio completo en móvil */
-        border-right: 1.5px solid var(--brand-yellow); /* Borde derecho restaurado */
-        margin-bottom: 10px; /* Espacio entre input y botón */
     }
-    .subscribe-button {
-        width: 100%;
-        box-sizing: border-box;
-        border-radius: var(--form-pill-radius); /* Radio completo en móvil */
-        border-left: 1.5px solid var(--brand-yellow); /* Borde izquierdo restaurado (o borde completo) */
-        border: 1.5px solid var(--brand-yellow); /* Más simple: borde completo para el botón en móvil */
-        margin-left: 0; /* Resetear el margen negativo */
-    }
+    /* No se necesitan cambios específicos de borde/radio aquí
+       porque ya tienen su estilo individual por defecto. */
+
     .logo-container {
-        /* Podrías querer ajustar 'bottom' en móviles si hay menos espacio */
         bottom: 20px;
+    }
+    .footer-logo {
+        width: clamp(60px, 18vw, 75px); /* Ajuste de tamaño para móviles */
     }
 }
