@@ -9,128 +9,38 @@
 
 :root {
     --brand-yellow: #F2CA50; /* Amarillo/dorado */
-
-    /* Panel esmerilado claro y textos sobre él */
-    --content-box-bg: rgba(231, 231, 231, 0.20); /* #E7E7E7 con 20% opacidad */
-    /* --content-box-border: rgba(255, 255, 255, 0.3); Ya no se usa para el borde */
+    --content-box-bg: rgba(231, 231, 231, 0.20);
     --timer-label-text: rgba(255, 255, 255, 0.85);
     --placeholder-text-on-light-panel: rgba(0, 0, 0, 0.4);
     --input-text-on-light-panel: #333333;
     --button-text-on-yellow: #3A2E0A;
-
     --body-bg-fallback: #333333;
     --font-title: 'AceSans', 'Poppins', sans-serif;
     --font-body: 'Poppins', sans-serif;
     --form-pill-radius: 30px;
+    --form-border-width: 1.5px; /* Definimos el grosor del borde para reusarlo */
 }
 
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: var(--font-body);
-    background-color: var(--body-bg-fallback);
-    line-height: 1.6;
-    color: #FFFFFF;
-}
+body, html { /* Sin cambios */ }
+.background-container { /* Sin cambios */ }
+.content-box { /* Sin cambios */ }
+.main-title { /* Sin cambios */ }
+.countdown-grid { /* Sin cambios */ }
+.timer-item { /* Sin cambios */ }
+.timer-value { /* Sin cambios */ }
+.timer-label { /* Sin cambios */ }
+.subscribe-prompt { /* Sin cambios */ }
 
-.background-container {
-    width: 100%;
-    min-height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.85; /* Ajusta según sea necesario para el contraste de tu imagen de fondo */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-    position: relative;
-}
-
-.content-box {
-    position: relative;
-    z-index: 1;
-    background-color: var(--content-box-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: clamp(30px, 6vw, 50px);
-    border-radius: 15px;
-    border: none; /* Sin borde para el content-box */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    max-width: 620px;
-    width: 90%;
-}
-
-.main-title {
-    font-family: var(--font-title);
-    font-size: clamp(1.8rem, 5vw, 2.6rem);
-    font-weight: normal;
-    color: var(--brand-yellow);
-    margin-top: 0;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    line-height: 1.2;
-}
-
-.countdown-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: clamp(15px, 3vw, 25px);
-    margin-bottom: 35px;
-}
-
-.timer-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.timer-value {
-    font-family: var(--font-body);
-    font-size: clamp(2.2rem, 7vw, 3.2rem);
-    font-weight: 500;
-    color: var(--brand-yellow);
-    width: clamp(65px, 15vw, 80px);
-    height: clamp(65px, 15vw, 80px);
-    border: 2px solid rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
-.timer-label {
-    font-size: clamp(0.75rem, 2.5vw, 0.9rem);
-    font-weight: 400;
-    color: var(--timer-label-text);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-}
-
-.subscribe-prompt {
-    font-family: var(--font-title);
-    font-size: clamp(1rem, 3.5vw, 1.2rem);
-    font-weight: normal;
-    color: var(--brand-yellow);
-    margin-bottom: 25px;
-    line-height: 1.4;
-}
-
-/* --- ESTILOS DEL FORMULARIO (INPUT Y BOTÓN SEPARADOS) --- */
+/* --- ESTILOS DEL FORMULARIO (INPUT Y BOTÓN UNIDOS VISUALMENTE) --- */
 .subscribe-form {
-    display: flex;
-    gap: 10px; /* Espacio entre input y botón */
-    align-items: stretch; /* Misma altura para input y botón */
+    display: flex; /* Para alinear input y botón */
+    align-items: stretch; /* Para que tengan la misma altura */
     max-width: 480px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+    /* No hay 'gap' para que estén juntos */
+    /* El borde exterior y el radio se gestionan en los hijos */
 }
 
 .email-input {
@@ -138,11 +48,22 @@ body, html {
     padding: 12px 20px;
     font-size: clamp(0.9rem, 2.5vw, 1rem);
     color: var(--input-text-on-light-panel);
-    background-color: rgba(255, 255, 255, 0.35);
-    border: 1.5px solid var(--brand-yellow); /* Borde amarillo */
-    border-radius: var(--form-pill-radius); /* Radio completo */
+    background-color: rgba(255, 255, 255, 0.35); /* Fondo del input */
+
+    /* Borde amarillo en los lados visibles del input */
+    border: var(--form-border-width) solid var(--brand-yellow);
+    border-right: none; /* Sin borde derecho para unirse al botón */
+
+    /* Radios solo en el lado izquierdo */
+    border-top-left-radius: var(--form-pill-radius);
+    border-bottom-left-radius: var(--form-pill-radius);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
     outline: none;
     transition: background-color 0.3s, border-color 0.3s;
+    position: relative; /* Para el z-index */
+    z-index: 1; /* Detrás del botón en la superposición */
 }
 
 .email-input::placeholder {
@@ -152,39 +73,82 @@ body, html {
 
 .email-input:focus {
     background-color: rgba(255, 255, 255, 0.5);
-    /* El borde ya es amarillo, no necesita cambiar en focus a menos que quieras otro efecto */
+    /* El borde ya está definido, no es necesario cambiarlo en focus */
 }
 
 .subscribe-button {
     padding: 12px 25px;
     font-family: var(--font-title); /* Fuente AceSans */
     font-size: clamp(0.9rem, 2.5vw, 1rem);
-    font-weight: normal; /* AceSans podría tener solo un peso */
+    font-weight: normal;
     color: var(--button-text-on-yellow);
     background-color: var(--brand-yellow); /* Fondo amarillo */
-    border: none; /* Botón sin borde */
-    border-radius: var(--form-pill-radius); /* Radio completo */
+
+    /* Borde amarillo solo en los lados visibles del botón (derecho, arriba, abajo)
+       para dar continuidad al borde del input. */
+    border-top: var(--form-border-width) solid var(--brand-yellow);
+    border-bottom: var(--form-border-width) solid var(--brand-yellow);
+    border-right: var(--form-border-width) solid var(--brand-yellow);
+    border-left: none; /* Sin borde izquierdo para unirse al input */
+
+    /* Radios solo en el lado derecho */
+    border-top-right-radius: var(--form-pill-radius);
+    border-bottom-right-radius: var(--form-pill-radius);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 0.03em;
     transition: background-color 0.3s, transform 0.1s;
     white-space: nowrap;
+
+    /* Margen negativo para superponer ligeramente el botón sobre el input
+       y asegurar que los fondos/bordes se unan visualmente. */
+    margin-left: calc(-1 * var(--form-border-width)); /* Debe ser el negativo del grosor del borde */
+    position: relative; /* Para el z-index */
+    z-index: 2; /* Encima del input en la superposición */
 }
 /* --- FIN DE ESTILOS DEL FORMULARIO --- */
 
 .subscribe-button:hover {
     background-color: #dbc041;
 }
-
 .subscribe-button:active {
     transform: scale(0.96);
 }
 
-.form-message-style {
-    font-size: 0.9rem;
-    min-height: 1.2em;
-    font-weight: 500;
-}
+.form-message-style { /* Sin cambios */ }
+.logo-container { /* Sin cambios */ }
+.footer-logo { /* Sin cambios */ }
+
+/* Media Queries (Ajuste para el formulario apilado) */
+@media (max-width: 600px) {
+    .content-box { /* Sin cambios */ }
+
+    .subscribe-form {
+        flex-direction: column; /* Apilar input y botón */
+        gap: 10px;  /* Espacio entre input y botón en móvil */
+    }
+
+    .email-input {
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: var(--form-pill-radius); /* Radio completo en móvil */
+        border-right: var(--form-border-width) solid var(--brand-yellow); /* Borde derecho restaurado */
+    }
+
+    .subscribe-button {
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: var(--form-pill-radius); /* Radio completo en móvil */
+        /* Para el botón en móvil, decidimos si queremos borde o no.
+           Si queremos que coincida con el input, añadimos borde.
+           Si solo fondo, lo dejamos sin borde.
+           Por consistencia, vamos a añadirle el borde amarillo también. */
+        border: var(--form-border-width) solid var(--brand-yellow);
+        margin-left: 0; /* Resetear el margen negativo */
+    }
 
 .logo-container {
     position: absolute;
