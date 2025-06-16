@@ -1,4 +1,4 @@
-/* style.css (Solo se muestran las secciones modificadas o relevantes) */
+/* style.css (Solo secciones modificadas o relevantes) */
 
 @font-face {
     font-family: 'AceSans';
@@ -18,140 +18,68 @@
     --body-bg-fallback: #333333;
     --font-title: 'AceSans', 'Poppins', sans-serif;
     --font-body: 'Poppins', sans-serif;
-    --form-pill-radius: 30px; /* Radio para la forma de píldora del formulario */
+    --form-pill-radius: 30px;
 }
 
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: var(--font-body);
-    background-color: var(--body-bg-fallback);
-    line-height: 1.6;
-    color: #FFFFFF;
-}
-
-.background-container {
+body, html { /* Sin cambios */ }
+.background-container { /* Sin cambios, pero asegúrate que tenga position: relative; */
     width: 100%;
     min-height: 100vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.9; /* Ajusta según tu imagen */
+    opacity: 0.9;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* Cambiamos flex-direction para ayudar con el logo abajo, aunque se usará absolute */
+    flex-direction: column;
+    justify-content: center; /* Centra el content-box verticalmente */
+    align-items: center; /* Centra el content-box horizontalmente */
     padding: 20px;
     box-sizing: border-box;
-    position: relative;
+    position: relative; /* Muy importante para el posicionamiento absoluto del logo */
 }
-
-.content-box {
-    position: relative;
-    z-index: 1;
-    background-color: var(--content-box-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: clamp(30px, 6vw, 50px);
-    border-radius: 15px;
-    border: 1px solid var(--content-box-border);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    max-width: 620px;
-    width: 90%;
-}
-
-.main-title {
-    font-family: var(--font-title);
-    font-size: clamp(1.8rem, 5vw, 2.6rem);
-    font-weight: normal;
-    color: var(--brand-yellow);
-    margin-top: 0;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    line-height: 1.2;
-}
-
-.countdown-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: clamp(15px, 3vw, 25px);
-    margin-bottom: 35px;
-}
-
-.timer-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.timer-value {
-    font-family: var(--font-body);
-    font-size: clamp(2.2rem, 7vw, 3.2rem);
-    font-weight: 500;
-    color: var(--brand-yellow);
-    width: clamp(65px, 15vw, 80px);
-    height: clamp(65px, 15vw, 80px);
-    border: 2px solid rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 8px;
-}
-
+.content-box { /* Sin cambios */ }
+.main-title { /* Sin cambios */ }
+.countdown-grid { /* Sin cambios */ }
+.timer-item { /* Sin cambios */ }
+.timer-value { /* Sin cambios */ }
 .timer-label {
-    /* AUMENTADO EL TAMAÑO DE LAS ETIQUETAS */
-    font-size: clamp(0.75rem, 2.5vw, 0.9rem); /* Aumentado el mínimo y preferido */
+    font-size: clamp(0.75rem, 2.5vw, 0.9rem);
     font-weight: 400;
     color: var(--timer-label-text);
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
+.subscribe-prompt { /* Sin cambios */ }
 
-.subscribe-prompt {
-    font-family: var(--font-title);
-    font-size: clamp(1rem, 3.5vw, 1.2rem);
-    font-weight: normal;
-    color: var(--brand-yellow);
-    margin-bottom: 25px;
-    line-height: 1.4;
-}
-
-/* --- ESTILOS DEL FORMULARIO PARA UNIR INPUT Y BOTÓN --- */
+/* --- ESTILOS DEL FORMULARIO PARA UNIR INPUT Y BOTÓN COMO EN LA IMAGEN --- */
 .subscribe-form {
-    display: flex; /* Mantiene input y botón en línea */
-    /* Quitamos el gap para que se peguen: gap: 0; */
-    align-items: stretch;
-    max-width: 480px;
+    display: flex;
+    max-width: 480px; /* O el ancho que desees para el conjunto */
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
-
-    /* Para el borde amarillo unificado alrededor de toda la "píldora" */
-    border: 1.5px solid var(--brand-yellow); /* Borde amarillo alrededor del conjunto */
-    border-radius: var(--form-pill-radius); /* Radio de la píldora unificada */
-    overflow: hidden; /* Importante para que los radios internos no sobresalgan */
+    /* El borde y radio se aplicarán individualmente para lograr el efecto "sobrepuesto" */
+    /* No hay 'gap' entre ellos */
 }
 
 .email-input {
-    flex-grow: 1;
-    padding: 12px 20px; /* Ajusta el padding para altura */
+    flex-grow: 1; /* El input toma el espacio principal */
+    padding: 12px 20px;
     font-size: clamp(0.9rem, 2.5vw, 1rem);
     color: var(--input-text-on-light-panel);
     background-color: rgba(255, 255, 255, 0.35);
-
-    /* Quitamos bordes individuales y radios que no sean el izquierdo */
-    border: none; /* El borde ahora está en .subscribe-form */
-    border-radius: 0; /* Lo gestiona el contenedor .subscribe-form, pero por si acaso */
-                      /* Específicamente, solo el extremo izquierdo debería tener radio,
-                         pero al estar dentro de un contenedor con overflow:hidden y border-radius,
-                         se adaptará a la forma del contenedor. */
+    border: 1.5px solid var(--brand-yellow); /* Borde amarillo completo */
+    /* Radios solo en el lado izquierdo */
+    border-top-left-radius: var(--form-pill-radius);
+    border-bottom-left-radius: var(--form-pill-radius);
+    border-top-right-radius: 0; /* Sin radio a la derecha */
+    border-bottom-right-radius: 0; /* Sin radio a la derecha */
+    border-right: none; /* Sin borde derecho para que se una al botón */
     outline: none;
     transition: background-color 0.3s;
-    /* Ajuste para que el placeholder no esté tan pegado al borde si es necesario */
-    /* text-indent: 5px; */
+    position: relative; /* Para z-index si el botón necesita "solaparse" ligeramente */
+    z-index: 1;
 }
 
 .email-input::placeholder {
@@ -161,76 +89,86 @@ body, html {
 
 .email-input:focus {
     background-color: rgba(255, 255, 255, 0.5);
-    /* No necesitamos cambiar el borde aquí ya que está en el contenedor */
 }
 
 .subscribe-button {
-    padding: 12px 25px; /* Ajusta el padding para altura */
-    font-size: clamp(0.9rem, 2.5vw, 1rem);
-    font-weight: 600;
+    padding: 12px 25px;
+    font-family: var(--font-title); /* Aplicar la fuente AceSans */
+    font-size: clamp(0.9rem, 2.5vw, 1rem); /* Consistente con el input */
+    font-weight: normal; /* AceSans puede tener solo este peso */
     color: var(--button-text-on-yellow);
     background-color: var(--brand-yellow);
-
-    /* Quitamos bordes individuales y radios que no sean el derecho */
-    border: none; /* El borde ahora está en .subscribe-form */
-    border-radius: 0; /* Gestionado por el contenedor .subscribe-form */
-
+    /* Borde solo en el lado derecho, arriba y abajo para completar el del input */
+    border-top: 1.5px solid var(--brand-yellow);
+    border-bottom: 1.5px solid var(--brand-yellow);
+    border-right: 1.5px solid var(--brand-yellow);
+    border-left: none; /* Sin borde izquierdo para unirse al input */
+    /* Radios solo en el lado derecho */
+    border-top-right-radius: var(--form-pill-radius);
+    border-bottom-right-radius: var(--form-pill-radius);
+    border-top-left-radius: 0; /* Sin radio a la izquierda */
+    border-bottom-left-radius: 0; /* Sin radio a la izquierda */
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 0.03em;
     transition: background-color 0.3s, transform 0.1s;
     white-space: nowrap;
-    /* Para separar visualmente un poco el input del botón si el fondo es similar */
-    /* border-left: 1px solid rgba(0,0,0,0.1); */ /* Esto si el .subscribe-form no tuviera borde */
+    /* Para que el botón "monte" ligeramente el input si es necesario */
+    /* Esto ayuda a asegurar que no haya un pixel de separación visual por antialiasing */
+    margin-left: -1.5px; /* Debería coincidir con el grosor del borde (border-width) */
+    position: relative;
+    z-index: 2; /* Para que esté por encima del input si hay solapamiento */
 }
 /* --- FIN DE ESTILOS DEL FORMULARIO --- */
 
+.subscribe-button:hover { /* Sin cambios */ }
+.subscribe-button:active { /* Sin cambios */ }
+.form-message-style { /* Sin cambios */ }
 
-.subscribe-button:hover {
-    background-color: #dbc041;
-}
-.subscribe-button:active {
-    transform: scale(0.96);
-}
-
-.form-message-style {
-    font-size: 0.9rem;
-    min-height: 1.2em;
-    font-weight: 500;
-}
-
+/* --- ESTILOS PARA EL LOGO FUERA Y ABAJO --- */
 .logo-container {
-    margin-top: 30px;
+    position: absolute; /* Posicionamiento absoluto respecto a .background-container */
+    bottom: 30px; /* Distancia desde el borde inferior del viewport/background-container */
+    left: 50%; /* Centrado horizontal */
+    transform: translateX(-50%); /* Ajuste fino para centrado perfecto */
+    z-index: 10; /* Asegurar que esté por encima de otros elementos si es necesario */
 }
 
 .footer-logo {
-    width: clamp(50px, 12vw, 70px);
+    width: clamp(50px, 10vw, 65px); /* Ajusta el tamaño como prefieras */
     height: auto;
     opacity: 0.9;
     filter: brightness(0) invert(1);
 }
 
-/* Media Queries (Solo la relevante para el formulario) */
+/* Media Queries (Ajuste para el formulario apilado) */
 @media (max-width: 600px) {
-    /* ... otros estilos responsivos ... */
-    .subscribe-form {
-        /* Cuando se apila, el borde unificado no tiene sentido de la misma manera */
-        /* Podríamos quitarlo o estilizar cada elemento individualmente */
-        flex-direction: column;
-        border: none; /* Quitamos el borde unificado */
-        gap: 10px; /* Añadimos gap de nuevo */
-        overflow: visible; /* Restauramos overflow */
+    .background-container {
+        /* No es necesario el flex-direction column aquí si el logo ya está absolute */
     }
-    .email-input, .subscribe-button {
+    .content-box { /* Sin cambios, pero revisa si algo se desajusta */ }
+    .subscribe-form {
+        flex-direction: column; /* Apilar input y botón */
+        /* Ya no se aplica el estilo de "píldora unida" */
+        /* Quitamos el margin-left negativo del botón que no aplica aquí */
+    }
+    .email-input {
         width: 100%;
         box-sizing: border-box;
-        border-radius: var(--form-pill-radius); /* Aplicamos el radio a cada uno */
-        /* Si quitamos el borde unificado, el input necesita su propio borde en móvil */
-        border: 1.5px solid var(--brand-yellow);
+        border-radius: var(--form-pill-radius); /* Radio completo en móvil */
+        border-right: 1.5px solid var(--brand-yellow); /* Borde derecho restaurado */
+        margin-bottom: 10px; /* Espacio entre input y botón */
     }
     .subscribe-button {
-        margin-top: 0; /* Ya tenemos gap en el form */
-        border: none; /* El botón solo necesita su fondo */
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: var(--form-pill-radius); /* Radio completo en móvil */
+        border-left: 1.5px solid var(--brand-yellow); /* Borde izquierdo restaurado (o borde completo) */
+        border: 1.5px solid var(--brand-yellow); /* Más simple: borde completo para el botón en móvil */
+        margin-left: 0; /* Resetear el margen negativo */
     }
-    /* ... otros estilos responsivos ... */
+    .logo-container {
+        /* Podrías querer ajustar 'bottom' en móviles si hay menos espacio */
+        bottom: 20px;
+    }
 }

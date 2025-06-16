@@ -22,7 +22,7 @@
 
             <div id="countdown" class="countdown-grid">
                 <div class="timer-item">
-                    <div id="days" class="timer-value">00</div> 
+                    <div id="days" class="timer-value">00</div>
                     <p class="timer-label">DAYS</p>
                 </div>
                 <div class="timer-item">
@@ -47,55 +47,48 @@
             </form>
             <p id="formMessage" class="form-message-style"></p>
 
-            <div class="logo-container">
-                <img src="./assets/hf.svg" alt="Fuled by Sunshine Logo" class="footer-logo">
-            </div>
+            <!-- EL LOGO YA NO ESTÁ AQUÍ DENTRO -->
         </div>
+
+        <!-- EL LOGO SE MUEVE AQUÍ, FUERA DEL CONTENT-BOX PERO DENTRO DEL BACKGROUND-CONTAINER -->
+        <div class="logo-container">
+            <img src="./assets/hf.svg" alt="Fuled by Sunshine Logo" class="footer-logo">
+        </div>
+
     </div>
 
     <script>
-        // --- CONFIGURACIÓN DE LA CUENTA REGRESIVA ---
-        // ACTUALIZADO: Julio 30, 2025
+        // JS sin cambios respecto a la versión anterior (con fecha de Julio 30, 2025)
         const countdownDate = new Date("Jul 30, 2025 23:59:59").getTime();
-
         const countdownFunction = setInterval(function() {
             const now = new Date().getTime();
             const distance = countdownDate - now;
-
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
             const daysElem = document.getElementById("days");
             const hoursElem = document.getElementById("hours");
             const minutesElem = document.getElementById("minutes");
             const secondsElem = document.getElementById("seconds");
-
             if (daysElem) daysElem.innerHTML = String(days).padStart(2, '0');
             if (hoursElem) hoursElem.innerHTML = String(hours).padStart(2, '0');
             if (minutesElem) minutesElem.innerHTML = String(minutes).padStart(2, '0');
             if (secondsElem) secondsElem.innerHTML = String(seconds).padStart(2, '0');
-
             if (distance < 0) {
                 clearInterval(countdownFunction);
-                const countdownContainer = document.getElementById("countdown");
-                if (countdownContainer) {
-                     if (daysElem) daysElem.innerHTML = "00";
-                     if (hoursElem) hoursElem.innerHTML = "00";
-                     if (minutesElem) minutesElem.innerHTML = "00";
-                     if (secondsElem) secondsElem.innerHTML = "00";
-                }
+                if (daysElem) daysElem.innerHTML = "00";
+                if (hoursElem) hoursElem.innerHTML = "00";
+                if (minutesElem) minutesElem.innerHTML = "00";
+                if (secondsElem) secondsElem.innerHTML = "00";
             }
         }, 1000);
 
-        // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN (sin cambios aquí) ---
         const form = document.getElementById('subscribeForm');
         const formMessage = document.getElementById('formMessage');
         const emailInput = document.getElementById('emailInput');
         const submitButton = form.querySelector('.subscribe-button');
         const BACKEND_URL = '/api/subscribe';
-
         if (form) {
             form.addEventListener('submit', async function(event) {
                 event.preventDefault();
