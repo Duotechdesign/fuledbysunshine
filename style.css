@@ -45,7 +45,7 @@ body, html {
        Si la imagen es clara, un valor más alto (ej. 0.9 o 1) está bien.
        Si esto afecta al content-box, considera un pseudo-elemento ::before para el overlay.
     */
-    /* opacity: 0.85; */ /* Prueba sin esto primero, y luego ajústalo si es necesario */
+    opacity: 0.85;  /* Prueba sin esto primero, y luego ajústalo si es necesario */
     display: flex;
     flex-direction: column;
     justify-content: center;
