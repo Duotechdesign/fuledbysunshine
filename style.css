@@ -1,4 +1,4 @@
-/* style.css */
+/* style.css (Solo se muestran las secciones modificadas o relevantes) */
 
 @font-face {
     font-family: 'AceSans';
@@ -8,28 +8,17 @@
 }
 
 :root {
-    /* Color principal amarillo/dorado de la referencia */
-    --brand-yellow: #F2CA50; /* Actualizado al color que mencionaste */
-
-    /* Panel esmerilado claro */
-    --content-box-bg: rgba(231, 231, 231, 0.20); /* #E7E7E7 con 20% opacidad */
-    --content-box-border: rgba(255, 255, 255, 0.3); /* Borde blanco sutil para el panel claro */
-
-    /* Textos sobre el panel claro */
-    /* El título principal "COOKING UP..." es --brand-yellow */
-    /* Números del timer son --brand-yellow */
-    --timer-label-text: rgba(255, 255, 255, 0.85); /* Etiquetas DAYS, HOURS (blanco/casi opaco) */
-    /* "Be the first to know..." es --brand-yellow */
-    --placeholder-text-on-light-panel: rgba(0, 0, 0, 0.4); /* Placeholder oscuro sobre panel claro */
-    --input-text-on-light-panel: #333333; /* Texto que se escribe en el input */
-
-    /* Botón */
-    --button-text-on-yellow: #3A2E0A; /* Texto oscuro para el botón amarillo */
-
-    /* Otros */
-    --body-bg-fallback: #333333; /* Si la imagen de fondo no carga */
+    --brand-yellow: #F2CA50;
+    --content-box-bg: rgba(231, 231, 231, 0.20);
+    --content-box-border: rgba(255, 255, 255, 0.3);
+    --timer-label-text: rgba(255, 255, 255, 0.85);
+    --placeholder-text-on-light-panel: rgba(0, 0, 0, 0.4);
+    --input-text-on-light-panel: #333333;
+    --button-text-on-yellow: #3A2E0A;
+    --body-bg-fallback: #333333;
     --font-title: 'AceSans', 'Poppins', sans-serif;
     --font-body: 'Poppins', sans-serif;
+    --form-pill-radius: 30px; /* Radio para la forma de píldora del formulario */
 }
 
 body, html {
@@ -39,7 +28,7 @@ body, html {
     font-family: var(--font-body);
     background-color: var(--body-bg-fallback);
     line-height: 1.6;
-    color: #FFFFFF; /* Color de texto por defecto si algo queda fuera */
+    color: #FFFFFF;
 }
 
 .background-container {
@@ -48,52 +37,34 @@ body, html {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    /* Opacidad de la imagen de fondo al 75% */
-    /* Si la imagen no tiene alfa, puedes usar un pseudo-elemento o un div wrapper */
-    /* Opción 1: Aplicar directamente si es un <img> y no background-image */
-    /* Opción 2: Usar un overlay sutil para simularlo */
-    opacity: 0.9; /* REDUCE ESTO A 0.75 SI LA IMAGEN ES MUY OSCURA. Si es clara, este valor puede ser mayor. Prueba y ajusta. */
-                   /* Si este 'opacity' afecta al .content-box (lo hará si no está posicionado absolute), es mejor usar un overlay. */
-                   /* Vamos a quitar el overlay por ahora y ver cómo se ve con solo opacity aquí. */
-                   /* Si esto hace que el content-box también sea translúcido de forma no deseada, volveremos al overlay. */
-
+    opacity: 0.9; /* Ajusta según tu imagen */
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
-    position: relative; /* Para el .content-box */
+    position: relative;
 }
-
-/* Si la opacidad en .background-container afecta negativamente, usa este overlay: */
-/*
-.background-overlay {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.25); // (1 - 0.75 de opacidad deseada)
-    z-index: 0; // Detrás del content-box
-}
-*/
 
 .content-box {
-    position: relative; /* O absolute si el padre es el viewport y quieres centrarlo así */
-    z-index: 1; /* Encima del overlay si se usa */
+    position: relative;
+    z-index: 1;
     background-color: var(--content-box-bg);
-    backdrop-filter: blur(12px); /* Ajusta el valor del blur como en la imagen */
+    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: clamp(30px, 6vw, 50px);
-    border-radius: 15px; /* Bordes redondeados del panel */
-    border: 1px solid var(--content-box-border); /* Borde blanco sutil */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Sombra más sutil para panel claro */
+    border-radius: 15px;
+    border: 1px solid var(--content-box-border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     text-align: center;
-    max-width: 620px; /* Ancho del panel */
+    max-width: 620px;
     width: 90%;
 }
 
 .main-title {
     font-family: var(--font-title);
-    font-size: clamp(1.8rem, 5vw, 2.6rem); /* Ajusta según AceSans */
-    font-weight: normal; /* AceSans puede tener solo un peso */
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    font-weight: normal;
     color: var(--brand-yellow);
     margin-top: 0;
     margin-bottom: 30px;
@@ -115,88 +86,108 @@ body, html {
     align-items: center;
 }
 
-.timer-value { /* Contenedor del número */
-    font-family: var(--font-body); /* O --font-title si quieres AceSans para números */
+.timer-value {
+    font-family: var(--font-body);
     font-size: clamp(2.2rem, 7vw, 3.2rem);
-    font-weight: 500; /* Poppins medium */
-    color: var(--brand-yellow); /* Números en amarillo */
-    width: clamp(65px, 15vw, 80px); /* Tamaño del círculo */
+    font-weight: 500;
+    color: var(--brand-yellow);
+    width: clamp(65px, 15vw, 80px);
     height: clamp(65px, 15vw, 80px);
-    border: 2px solid rgba(255, 255, 255, 0.9); /* Borde blanco para los círculos */
+    border: 2px solid rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 8px;
-    /* background-color: rgba(255,255,255,0.05); Sutil fondo si se desea, pero la imagen ref no lo tiene */
 }
 
 .timer-label {
-    font-size: clamp(0.65rem, 2vw, 0.8rem);
-    font-weight: 400; /* Poppins regular o light */
-    color: var(--timer-label-text); /* Blanco/casi opaco */
+    /* AUMENTADO EL TAMAÑO DE LAS ETIQUETAS */
+    font-size: clamp(0.75rem, 2.5vw, 0.9rem); /* Aumentado el mínimo y preferido */
+    font-weight: 400;
+    color: var(--timer-label-text);
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
 
 .subscribe-prompt {
-    font-family: var(--font-title); /* Usar AceSans */
+    font-family: var(--font-title);
     font-size: clamp(1rem, 3.5vw, 1.2rem);
     font-weight: normal;
-    color: var(--brand-yellow); /* Amarillo */
+    color: var(--brand-yellow);
     margin-bottom: 25px;
     line-height: 1.4;
 }
 
+/* --- ESTILOS DEL FORMULARIO PARA UNIR INPUT Y BOTÓN --- */
 .subscribe-form {
-    display: flex; /* Para poner input y botón en línea */
-    gap: 10px;
-    align-items: stretch; /* Para que input y botón tengan la misma altura */
-    max-width: 480px; /* Ancho del formulario */
+    display: flex; /* Mantiene input y botón en línea */
+    /* Quitamos el gap para que se peguen: gap: 0; */
+    align-items: stretch;
+    max-width: 480px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+
+    /* Para el borde amarillo unificado alrededor de toda la "píldora" */
+    border: 1.5px solid var(--brand-yellow); /* Borde amarillo alrededor del conjunto */
+    border-radius: var(--form-pill-radius); /* Radio de la píldora unificada */
+    overflow: hidden; /* Importante para que los radios internos no sobresalgan */
 }
 
 .email-input {
-    flex-grow: 1; /* Ocupa el espacio disponible */
-    padding: 10px 18px;
+    flex-grow: 1;
+    padding: 12px 20px; /* Ajusta el padding para altura */
     font-size: clamp(0.9rem, 2.5vw, 1rem);
-    color: var(--input-text-on-light-panel); /* Texto oscuro */
-    background-color: rgba(255, 255, 255, 0.35); /* Fondo blanco translúcido para el input */
-    border: 1px solid rgba(255, 255, 255, 0.5); /* Borde blanco más visible */
-    border-radius: 25px; /* Bordes redondeados */
+    color: var(--input-text-on-light-panel);
+    background-color: rgba(255, 255, 255, 0.35);
+
+    /* Quitamos bordes individuales y radios que no sean el izquierdo */
+    border: none; /* El borde ahora está en .subscribe-form */
+    border-radius: 0; /* Lo gestiona el contenedor .subscribe-form, pero por si acaso */
+                      /* Específicamente, solo el extremo izquierdo debería tener radio,
+                         pero al estar dentro de un contenedor con overflow:hidden y border-radius,
+                         se adaptará a la forma del contenedor. */
     outline: none;
-    transition: border-color 0.3s, background-color 0.3s;
+    transition: background-color 0.3s;
+    /* Ajuste para que el placeholder no esté tan pegado al borde si es necesario */
+    /* text-indent: 5px; */
 }
 
 .email-input::placeholder {
-    color: var(--placeholder-text-on-light-panel); /* Placeholder oscuro */
-    opacity: 1; /* Asegurar que sea visible */
+    color: var(--placeholder-text-on-light-panel);
+    opacity: 1;
 }
 
 .email-input:focus {
     background-color: rgba(255, 255, 255, 0.5);
-    border-color: var(--brand-yellow);
+    /* No necesitamos cambiar el borde aquí ya que está en el contenedor */
 }
 
 .subscribe-button {
-    padding: 10px 25px;
+    padding: 12px 25px; /* Ajusta el padding para altura */
     font-size: clamp(0.9rem, 2.5vw, 1rem);
-    font-weight: 600; /* Poppins semibold */
+    font-weight: 600;
     color: var(--button-text-on-yellow);
     background-color: var(--brand-yellow);
-    border: none;
-    border-radius: 25px; /* Mismo radio que el input */
+
+    /* Quitamos bordes individuales y radios que no sean el derecho */
+    border: none; /* El borde ahora está en .subscribe-form */
+    border-radius: 0; /* Gestionado por el contenedor .subscribe-form */
+
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 0.03em;
     transition: background-color 0.3s, transform 0.1s;
-    white-space: nowrap; /* Evitar que el texto del botón se parta */
+    white-space: nowrap;
+    /* Para separar visualmente un poco el input del botón si el fondo es similar */
+    /* border-left: 1px solid rgba(0,0,0,0.1); */ /* Esto si el .subscribe-form no tuviera borde */
 }
+/* --- FIN DE ESTILOS DEL FORMULARIO --- */
+
 
 .subscribe-button:hover {
-    background-color: #dbc041; /* Amarillo un poco más oscuro */
+    background-color: #dbc041;
 }
 .subscribe-button:active {
     transform: scale(0.96);
@@ -206,8 +197,6 @@ body, html {
     font-size: 0.9rem;
     min-height: 1.2em;
     font-weight: 500;
-    /* El color se define en JS, pero un default puede ser: */
-    /* color: var(--input-text-on-light-panel); */
 }
 
 .logo-container {
@@ -215,46 +204,33 @@ body, html {
 }
 
 .footer-logo {
-    width: clamp(50px, 12vw, 70px); /* Tamaño del logo */
+    width: clamp(50px, 12vw, 70px);
     height: auto;
-    opacity: 0.9; /* Opacidad del logo */
-    filter: brightness(0) invert(1); /* Para hacer el SVG blanco si es negro originalmente */
+    opacity: 0.9;
+    filter: brightness(0) invert(1);
 }
 
-/* Media Queries para responsividad */
+/* Media Queries (Solo la relevante para el formulario) */
 @media (max-width: 600px) {
-    .content-box {
-        padding: clamp(20px, 5vw, 30px) clamp(15px, 4vw, 25px);
-    }
-    .main-title {
-        font-size: clamp(1.6rem, 7vw, 2rem);
-        margin-bottom: 20px;
-    }
-    .countdown-grid {
-        gap: 10px;
-        margin-bottom: 25px;
-    }
-    .timer-value {
-        font-size: clamp(1.8rem, 8vw, 2.5rem);
-        width: clamp(50px, 18vw, 65px);
-        height: clamp(50px, 18vw, 65px);
-    }
-    .subscribe-prompt {
-        font-size: clamp(0.9rem, 4vw, 1rem);
-        margin-bottom: 20px;
-    }
+    /* ... otros estilos responsivos ... */
     .subscribe-form {
-        flex-direction: column; /* Apilar input y botón en móviles */
-        max-width: 100%;
+        /* Cuando se apila, el borde unificado no tiene sentido de la misma manera */
+        /* Podríamos quitarlo o estilizar cada elemento individualmente */
+        flex-direction: column;
+        border: none; /* Quitamos el borde unificado */
+        gap: 10px; /* Añadimos gap de nuevo */
+        overflow: visible; /* Restauramos overflow */
     }
     .email-input, .subscribe-button {
-        width: 100%; /* Ocupar todo el ancho disponible */
-        box-sizing: border-box; /* Importante con width 100% y padding */
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: var(--form-pill-radius); /* Aplicamos el radio a cada uno */
+        /* Si quitamos el borde unificado, el input necesita su propio borde en móvil */
+        border: 1.5px solid var(--brand-yellow);
     }
     .subscribe-button {
-        margin-top: 10px; /* Espacio cuando se apilan */
+        margin-top: 0; /* Ya tenemos gap en el form */
+        border: none; /* El botón solo necesita su fondo */
     }
-    .footer-logo {
-        width: clamp(40px, 15vw, 55px);
-    }
+    /* ... otros estilos responsivos ... */
 }

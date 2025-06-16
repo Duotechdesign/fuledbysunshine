@@ -15,9 +15,6 @@
         class="background-container"
         style="background-image: url('./assets/bgImg.webp');"
     >
-        <!-- Este overlay es opcional, si la imagen ya tiene la opacidad deseada o se controla diferente -->
-        <!-- <div class="background-overlay"></div> -->
-
         <div class="content-box">
             <h1 class="main-title">
               COOKING UP SOMETHING SPECIAL!
@@ -25,7 +22,7 @@
 
             <div id="countdown" class="countdown-grid">
                 <div class="timer-item">
-                    <div id="days" class="timer-value">00</div> {/* El número va aquí dentro */}
+                    <div id="days" class="timer-value">00</div> 
                     <p class="timer-label">DAYS</p>
                 </div>
                 <div class="timer-item">
@@ -58,7 +55,8 @@
 
     <script>
         // --- CONFIGURACIÓN DE LA CUENTA REGRESIVA ---
-        const countdownDate = new Date("Dec 31, 2024 23:59:59").getTime(); // ¡¡TU FECHA DE LANZAMIENTO!!
+        // ACTUALIZADO: Julio 30, 2025
+        const countdownDate = new Date("Jul 30, 2025 23:59:59").getTime();
 
         const countdownFunction = setInterval(function() {
             const now = new Date().getTime();
@@ -69,7 +67,6 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Seleccionar los elementos CORRECTOS para mostrar los números
             const daysElem = document.getElementById("days");
             const hoursElem = document.getElementById("hours");
             const minutesElem = document.getElementById("minutes");
@@ -84,10 +81,6 @@
                 clearInterval(countdownFunction);
                 const countdownContainer = document.getElementById("countdown");
                 if (countdownContainer) {
-                    // Si la cuenta termina, puedes ocultarla o mostrar un mensaje diferente
-                    // Por ahora, solo la detendremos, no mostraremos "WE ARE LIVE"
-                    // countdownContainer.innerHTML = "<p class='launch-message'>¡LANZADO!</p>";
-                    // O simplemente ocultar los números y etiquetas si quieres que el form siga visible
                      if (daysElem) daysElem.innerHTML = "00";
                      if (hoursElem) hoursElem.innerHTML = "00";
                      if (minutesElem) minutesElem.innerHTML = "00";
@@ -96,20 +89,19 @@
             }
         }, 1000);
 
-        // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN ---
+        // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN (sin cambios aquí) ---
         const form = document.getElementById('subscribeForm');
         const formMessage = document.getElementById('formMessage');
         const emailInput = document.getElementById('emailInput');
         const submitButton = form.querySelector('.subscribe-button');
-
-        const BACKEND_URL = '/api/subscribe'; // Ajusta cuando sea necesario
+        const BACKEND_URL = '/api/subscribe';
 
         if (form) {
             form.addEventListener('submit', async function(event) {
                 event.preventDefault();
                 if (!emailInput.checkValidity()) {
                     formMessage.textContent = 'Please enter a valid email address.';
-                    formMessage.style.color = 'var(--brand-yellow)'; // O un color de error específico
+                    formMessage.style.color = 'var(--brand-yellow)';
                     return;
                 }
                 const originalButtonText = submitButton.textContent;
@@ -125,11 +117,11 @@
                     const result = await response.json().catch(() => ({}));
                     if (response.ok) {
                         formMessage.textContent = result.message || 'Thanks for subscribing!';
-                        formMessage.style.color = 'var(--brand-yellow)'; // Usar color amarillo para éxito
+                        formMessage.style.color = 'var(--brand-yellow)';
                         emailInput.value = '';
                     } else {
                         formMessage.textContent = result.error || 'Oops! Something went wrong.';
-                        formMessage.style.color = '#FF6B6B'; // Rojo para error
+                        formMessage.style.color = '#FF6B6B';
                     }
                 } catch (error) {
                     formMessage.textContent = 'Could not connect. Please try again later.';
