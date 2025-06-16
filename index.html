@@ -47,10 +47,8 @@
             </form>
             <p id="formMessage" class="form-message-style"></p>
 
-            <!-- EL LOGO YA NO ESTÁ AQUÍ DENTRO -->
         </div>
 
-        <!-- EL LOGO SE MUEVE AQUÍ, FUERA DEL CONTENT-BOX PERO DENTRO DEL BACKGROUND-CONTAINER -->
         <div class="logo-container">
             <img src="./assets/hf.svg" alt="Fuled by Sunshine Logo" class="footer-logo">
         </div>
@@ -58,7 +56,6 @@
     </div>
 
     <script>
-        // JS sin cambios respecto a la versión anterior (con fecha de Julio 30, 2025)
         const countdownDate = new Date("Jul 30, 2025 23:59:59").getTime();
         const countdownFunction = setInterval(function() {
             const now = new Date().getTime();
@@ -88,7 +85,7 @@
         const formMessage = document.getElementById('formMessage');
         const emailInput = document.getElementById('emailInput');
         const submitButton = form.querySelector('.subscribe-button');
-        const BACKEND_URL = '/api/subscribe';
+        const BACKEND_URL = '/api/subscribe'; // Cambia esto a tu URL real del backend
         if (form) {
             form.addEventListener('submit', async function(event) {
                 event.preventDefault();
@@ -117,6 +114,7 @@
                         formMessage.style.color = '#FF6B6B';
                     }
                 } catch (error) {
+                    console.error('Error submitting form:', error);
                     formMessage.textContent = 'Could not connect. Please try again later.';
                     formMessage.style.color = '#FF6B6B';
                 } finally {
