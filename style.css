@@ -1,24 +1,42 @@
 /* style.css - Para "Fuled by Sunshine" */
 
+/* Definición de la fuente personalizada */
+@font-face {
+    font-family: 'AceSans'; /* Nombre que usarás en CSS */
+    src: url('./assets/AceSans-FREE.otf') format('opentype'); /* Ruta a tu archivo de fuente */
+    font-weight: normal; /* O el peso que corresponda si tienes varios archivos */
+    font-style: normal;
+}
+
 :root {
-    --color-brand-yellow: #EEBF48; /* Amarillo de tu ejemplo */
-    --color-text-on-frosted: #374151; /* Un gris oscuro para texto sobre el fondo claro esmerilado (Tailwind gray-700) */
-    --color-text-muted-on-frosted: #6B7280; /* Gris más claro (Tailwind gray-500) */
-    --color-placeholder: #9CA3AF; /* Tailwind gray-400 */
-    --color-button-text-on-yellow: #1F2937; 
+    --color-brand-yellow: #EEBF48;
+    /* Colores para el estilo de la imagen de referencia (claro sobre oscuro) */
+    --color-text-on-frosted: #FFFFFF; /* Texto blanco */
+    --color-text-muted-on-frosted: rgba(255, 255, 255, 0.75); /* Blanco translúcido para etiquetas */
+    --color-placeholder-on-frosted: rgba(255, 255, 255, 0.6); /* Para el placeholder del input */
+    --color-button-text-on-yellow: #1A1A1A; /* Texto oscuro para el botón amarillo */
+
     --color-body-bg: #111827; /* Fondo oscuro si la imagen no cubre todo */
-    --content-box-bg: rgba(231, 231, 231, 0.2); /* #E7E7E7 con 20% opacidad */
+    /* El content-box bg será oscuro para que el texto blanco resalte, como en la imagen de ref. */
+    --content-box-bg: rgba(0, 0, 0, 0.35); /* Negro con 35% opacidad */
+    --content-box-border: rgba(255, 255, 255, 0.18); /* Borde blanco translúcido sutil */
+
+    --input-bg-frosted: rgba(255, 255, 255, 0.1); /* Fondo del input sobre el content-box */
+    --input-border-frosted: rgba(255, 255, 255, 0.3);
+
+    --font-title: 'AceSans', 'Poppins', sans-serif; /* AceSans primero, Poppins como fallback */
+    --font-body: 'Poppins', sans-serif;
 }
 
 body {
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--font-body);
     background-color: var(--color-body-bg);
-    color: var(--color-text-on-dark); /* Color por defecto si hay texto fuera del content-box */
+    color: var(--color-text-on-frosted); /* Color por defecto */
     margin: 0;
     line-height: 1.6;
+    min-height: 100vh; /* Asegurar que el body ocupe al menos toda la altura */
 }
 
-/* Contenedor principal de la imagen de fondo */
 .background-container {
     background-size: cover;
     background-position: center;
@@ -28,168 +46,200 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 1rem; /* o 20px */
+    box-sizing: border-box; /* Importante para que el padding no aumente el tamaño total */
     position: relative;
 }
 
-/* Overlay o ajuste de opacidad de la imagen de fondo */
-/* Opción 1: Si la imagen de fondo es un <img> tag, se le puede aplicar opacidad */
-/* Opción 2: Si es background-image en .background-container, un overlay es mejor */
-.background-overlay { /* Este overlay puede ayudar a oscurecer la imagen de fondo para el efecto */
+.background-overlay {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.23); /* 100% - 77% = 23% opacidad del overlay si la imagen es 100% opaca */
-                                         /* O si quieres que la imagen TENGA 77% opacidad, puedes aplicar a la imagen o a este overlay un (1 - 0.77) = 0.23 */
-                                         /* Más simple: Si la imagen es un <img>, puedes ponerle opacity: 0.77 directamente. */
-                                         /* Por ahora, asumimos que el overlay oscurece un poco. */
+    background-color: rgba(0, 0, 0, 0.30); /* Oscurece un poco el fondo para contraste. AJUSTA ESTO */
     z-index: 1;
 }
 
-
-/* Contenedor del contenido central con efecto "frosted glass" */
 .content-box {
     position: relative;
     z-index: 2;
-    background-color: var(--content-box-bg); /* #E7E7E7 con 20% opacidad */
-    backdrop-filter: blur(20px); /* desenfoque de 20px */
-    -webkit-backdrop-filter: blur(20px); /* Para Safari */
-    border-radius: 0.75rem; /* 12px */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil blanco translúcido */
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Sombra para destacar */
-    padding: 2rem; /* p-8 */
-    max-width: 34rem; 
-    width: 100%;
+    background-color: var(--content-box-bg); /* Fondo oscuro translúcido */
+    backdrop-filter: blur(15px); /* Ajusta el valor del blur a tu gusto */
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px; /* 0.75rem es 12px, la imagen parece tener más, unos 20px */
+    border: 1px solid var(--content-box-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    padding: clamp(25px, 5vw, 40px) clamp(30px, 6vw, 50px); /* Padding responsive */
+    max-width: 580px; /* Ancho máximo */
+    width: 90%;
     text-align: center;
 }
 
-/* Título principal */
 .main-title {
-    font-family: 'Poppins', sans-serif; 
-    color: var(--color-brand-yellow); /* Amarillo */
-    font-size: 1.5rem; 
-    font-weight: 600; 
-    margin-bottom: 1.5rem; 
+    font-family: var(--font-title); /* Usa la fuente AceSans */
+    color: var(--color-brand-yellow);
+    font-size: clamp(2rem, 6vw, 2.8rem); /* Tamaño responsive para el título */
+    font-weight: normal; /* AceSans FREE puede que solo tenga un peso */
+    margin-top: 0;
+    margin-bottom: clamp(25px, 5vh, 40px);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    line-height: 1.2;
 }
 
-/* Prompt para suscribirse */
-.subscribe-prompt {
-    font-size: 0.875rem; 
-    color: var(--color-text-on-frosted); /* Texto más oscuro para contraste sobre #E7E7E7 translúcido */
-    margin-bottom: 0.75rem;
-}
-
-/* Contenedor de la cuenta regresiva */
 .countdown-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.75rem; 
-    margin-bottom: 2rem;
+    gap: clamp(10px, 2vw, 20px);
+    margin-bottom: clamp(25px, 5vh, 40px);
 }
 
-/* Círculos de la cuenta regresiva */
-.timer-circle {
-    border: 1.5px solid var(--color-text-on-frosted); /* Borde más oscuro */
-    color: var(--color-brand-yellow);             /* Números en amarillo */
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.875rem; 
-    font-weight: 500; 
-    width: 4.5rem; 
-    height: 4.5rem;
-    border-radius: 9999px;
+.timer-item { /* Contenedor para cada unidad del timer, si lo usaste en HTML */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timer-circle { /* El círculo con el número */
+    border: 2px solid var(--color-text-muted-on-frosted); /* Borde blanco translúcido */
+    color: var(--color-brand-yellow); /* Números en amarillo */
+    font-family: var(--font-body); /* O var(--font-title) si quieres la misma que el título */
+    font-size: clamp(2rem, 7vw, 3rem);
+    font-weight: 500; /* Poppins 500 */
+    width: clamp(60px, 16vw, 85px);
+    height: clamp(60px, 16vw, 85px);
+    border-radius: 50%; /* Círculo perfecto */
     display: flex;
     align-items: center;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 8px; /* Espacio entre círculo y etiqueta */
+    background-color: rgba(0,0,0,0.1); /* Fondo muy sutil para el círculo */
 }
 
-/* Etiquetas de la cuenta regresiva (DAYS, HORAS, etc.) */
 .timer-label {
-    color: var(--color-text-muted-on-frosted); /* Gris más oscuro para etiquetas */
-    font-size: 0.75rem; 
-    margin-top: 0.5rem;
+    color: var(--color-text-muted-on-frosted);
+    font-size: clamp(0.6rem, 2.5vw, 0.8rem);
+    margin-top: 0; /* Ya hay margin-bottom en timer-circle */
     text-transform: uppercase;
-    letter-spacing: 0.075em;
+    letter-spacing: 0.1em; /* Un poco más de espaciado */
+    font-weight: 300; /* Poppins 300 */
 }
 
-/* Formulario de Suscripción */
+.subscribe-prompt {
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    color: var(--color-text-on-frosted);
+    margin-bottom: clamp(20px, 4vh, 30px);
+    font-weight: 400; /* Poppins 400 */
+    line-height: 1.5;
+}
+
 .subscribe-form {
     display: flex;
-    flex-direction: column;
-    gap: 0.75rem; 
-    max-width: 24rem; 
+    gap: 10px;
+    max-width: 26rem; /* Un poco más de ancho para el form */
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: clamp(15px, 3vh, 25px);
+    align-items: center; /* Alinea verticalmente input y botón si están en la misma fila */
 }
 
-/* Input de email */
 .email-input {
-    background-color: rgba(255, 255, 255, 0.15); /* Fondo blanco translúcido */
-    border: 1px solid rgba(209, 213, 219, 0.4); /* Borde gris claro translúcido */
-    color: var(--color-text-on-frosted); /* Texto oscuro */
+    background-color: var(--input-bg-frosted);
+    border: 1px solid var(--input-border-frosted);
+    color: var(--color-text-on-frosted); /* Texto que se escribe será blanco */
     flex-grow: 1;
-    padding: 0.75rem 1rem;
-    border-radius: 9999px;
+    padding: 12px 20px; /* Ajusta padding */
+    border-radius: 50px; /* Muy redondeado como en la imagen */
     outline: none;
-    font-size: 0.875rem;
+    font-size: clamp(0.85rem, 3vw, 1rem);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .email-input::placeholder {
-    color: var(--color-placeholder-on-dark); /* Podría necesitar un placeholder más oscuro */
+    color: var(--color-placeholder-on-frosted); /* Placeholder blanco translúcido */
 }
 .email-input:focus {
     border-color: var(--color-brand-yellow);
-    box-shadow: 0 0 0 2px rgba(238, 191, 72, 0.4); 
+    box-shadow: 0 0 0 2px rgba(238, 191, 72, 0.4);
 }
 
-/* Botón de Suscripción */
 .subscribe-button {
     background-color: var(--color-brand-yellow);
-    color: var(--color-button¡Entendido! Ya veo la diferencia entre tu resultado actual y el diseño objetivo. Quieres ese efecto de "vidrio esmerilado" o "frosted glass" para el contenedor del contenido, y ajustar los colores para que coincidan con tu imagen de referencia.
-
-**Ajustes para `style.css` (y potencialmente el HTML si quitamos el overlay oscuro):**
-
-**Colores Clave del Diseño Objetivo:**
-
-*   **Imagen-text-on-yellow); /* Texto oscuro sobre botón amarillo */
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
-    border-radius: 9999px;
-    transition: background-color 0.3s ease;
+    color: var(--color-button-text-on-yellow);
+    font-family: var(--font-body); /* O var(--font-title) */
+    font-weight: 700; /* Poppins 700 o 600 */
+    padding: 12px 25px;
+    border-radius: 50px; /* Muy redondeado */
+    transition: background-color 0.3s ease, transform 0.1s ease;
     cursor: pointer;
     border: none;
     text-transform: uppercase;
-    font-size: 0.875rem;
+    font-size: clamp(0.85rem, 3vw, 1rem);
+    letter-spacing: 0.5px;
 }
 .subscribe-button:hover {
-    background-color: #d9a937; 
+    background-color: #d9a937; /* Amarillo un poco más oscuro */
+}
+.subscribe-button:active {
+    transform: scale(0.97);
 }
 
-/* Mensaje del Formulario */
 .form-message-style {
     margin-top: 0.75rem;
-    font-size: 0.875rem;
-    height: 1.25rem;
-    min-height: 1.25rem;
-    color: var(--color-text-on-frosted); /* Mensaje del formulario también con texto más oscuro */
+    font-size: 0.9rem;
+    min-height: 1.3em;
+    font-weight: 500;
+    color: var(--color-brand-yellow); /* Color del mensaje por defecto, se puede cambiar en JS */
 }
 
-/* Media Queries */
-@media (min-width: 640px) { /* sm: */
-    .content-box { padding: 2.5rem; max-width: 36rem; }
-    .main-title { font-size: 1.875rem; }
-    .timer-circle { font-size: 1.875rem; width: 5rem; height: 5rem; }
-    .timer-label { font-size: 0.875rem; }
-    .subscribe-form { flex-direction: row; gap: 0.5rem; }
-    .email-input { font-size: 1rem; }
+.logo-container {
+    margin-top: clamp(20px, 4vh, 30px);
 }
-@media (min-width: 768px) { /* md: */
-    .content-box { padding: 3rem; }
-    .main-title { font-size: 2.25rem; /* md:text-4xl original */ }
+.footer-logo {
+    width: clamp(45px, 10vw, 65px); /* Ajusta el tamaño del logo */
+    height: auto;
+    opacity: 0.85; /* Sutilmente visible */
+}
+
+/* Media Queries (Mantén las tuyas o adapta estas) */
+@media (max-width: 600px) { /* Cambiado a max-width para mobile-first approach si prefieres */
+    .subscribe-form {
+        flex-direction: column; /* Apila input y botón */
+    }
+    .email-input, .subscribe-button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .subscribe-button {
+      margin-top: 10px; /* Espacio si se apilan */
+    }
+}
+
+/* Puedes añadir más media queries si es necesario */
+@media (max-width: 400px) {
+    .content-box {
+        padding: 20px 15px;
+        border-radius: 15px;
+    }
+    .countdown-grid {
+        gap: 8px;
+    }
+    .main-title {
+         margin-bottom: 20px;
+         font-size: 1.8rem; /* Ajuste específico para pantallas muy pequeñas */
+    }
+     .timer-circle {
+        font-size: 1.8rem;
+        width: 55px;
+        height: 55px;
+    }
+    .timer-label {
+        font-size: 0.65rem;
+    }
+    .subscribe-prompt {
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
 }

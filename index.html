@@ -2,86 +2,63 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta de Fondo:** Tiene una opacidad general o un overlay que la hace más tenue.
-*   **Contenedor de Contenido (`.content-box`):**
-    *   Color de fondo: `rgba(231, 231, 231, 0.2)` (Esto es #E7E7E7 con 20% de opacidad).
-    *   `backdrop-filter: blur(Xpx);` (El desenfoque del fondo).
-*   **Texto Principal (`.main-title`):** Amarillo/Dorado (tu `#EEBF48`).
-*   **Números del Timer (`.timer-circle`):** El número en amarillo/dorado, el círculo en blanco.
-*   **Etiquetas del Timer (`.timer-label`):** Blancas o un gris muy claro, con cierta transparencia.
-*   **Texto "Be the first..." (`.subscribe-prompt`):** Blanco o un gris muy claro, con cierta transparencia.
-*   **Input Email:** Bordes sutiles, placeholder claro.
-*   **Botón Subscribe:** Fondo amarillo/dorado, texto oscuro.
-
-**Modificaciones en `style.css`:**
-
-```css
-/* style.css - Para "Fuled by Sunshine" */
-
-:root {
-    --color-brand-yellow: #EEBF48; 
-    --color-text-on-frosted: #FFFFFF; /* Texto principal sobre el content-box */
-    --color-text-muted-on-frosted: rgba(255, 255, 255, 0.75);
-    --color-placeholder-on-frosted: rgba(255, 255, 255, 0.6);
-    --color-button-text-on-yellow: #1A1A1A; /* Un negro o gris muy oscuro para el botón */
-    --color-body-bg: #333333; /* Un gris oscuro si la imagen no cubre todo */
-    --font-primary: 'Misrow', sans-serif; /* Tu fuente Misrow */
-    --font-secondary: 'Poppins', sans-serif; /* O la que estés usando para cuerpo */
-}
-
-body {
-    font-family: var(--font-secondary);
-    background-color: var(--color-body-bg);
-    color: var(--color-text-on-frosted); /* Texto blanco por defecto para la página */
-    margin: 0;
-    line-height: 1.6;
-}
-
-/* Contenedor principal de la imagen de fondo */
-.background-container {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Próximamente - Fuled by Sunshine</title>
     <link rel="stylesheet" href="style.css">
-    {/* Añade aquí el enlace a Google Fonts si usas Poppins u otra */}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- No necesitas cargar AceSans desde Google Fonts si la tienes localmente, se hará con @font-face en CSS -->
 </head>
 <body>
 
-    <div 
+    <div
         class="background-container"
-        style="background-image: url('./assets/img.webp');" 
+        style="background-image: url('./assets/bgImg.webp');" {/* CORREGIDO: usa bgImg.webp */}
     >
-        {/* El .background-overlay ahora controla la opacidad general de la imagen de fondo si es necesario */}
-        {/* O puedes aplicar opacity: 0.77; directamente al .background-container si prefieres que la imagen en sí sea translúcida */}
-        <div class="background-overlay"></div> 
+        {/* Tu .background-overlay actual oscurece el fondo, lo cual está bien para el contraste */}
+        <div class="background-overlay"></div>
 
         <div class="content-box">
             <h1 class="main-title">
-              Cooking up something SPECIAL!
+              COOKING UP SOMETHING SPECIAL!
             </h1>
-            {/* ... resto del contenido (cuenta regresiva, formulario) sin cambios en la estructura HTML ... */}
-            {/* Asegúrate de que los elementos usen las clases CSS definidas */}
             <div id="countdown" class="countdown-grid">
-                <div><div id="days" class="timer-circle">00</div><p class="timer-label">DAYS</p></div>
-                <div><div id="hours" class="timer-circle">00</div><p class="timer-label">HOURS</p></div>
-                <div><div id="minutes" class="timer-circle">00</div><p class="timer-label">MINUTES</p></div>
-                <div><div id="seconds" class="timer-circle">00</div><p class="timer-label">SECONDS</p></div>
+                {/* La estructura que tienes aquí con los divs para days, hours, etc., es correcta */}
+                <div class="timer-item"> {/* Añadimos timer-item para consistencia con CSS de referencia */}
+                    <div id="days" class="timer-circle">00</div>
+                    <p class="timer-label">DAYS</p>
+                </div>
+                <div class="timer-item">
+                    <div id="hours" class="timer-circle">00</div>
+                    <p class="timer-label">HOURS</p>
+                </div>
+                <div class="timer-item">
+                    <div id="minutes" class="timer-circle">00</div>
+                    <p class="timer-label">MINS</p> {/* Ajusta a MINS si lo prefieres como en la imagen de referencia */}
+                </div>
+                <div class="timer-item">
+                    <div id="seconds" class="timer-circle">00</div>
+                    <p class="timer-label">SECONDS</p>
+                </div>
             </div>
             <p class="subscribe-prompt">Be the first to know when we launch.</p>
             <form id="subscribeForm" class="subscribe-form">
-                <input type="email" id="emailInput" name="email" placeholder="Tu correo electrónico" required class="email-input">
+                <input type="email" id="emailInput" name="email" placeholder="Your email address..." required class="email-input"> {/* Placeholder en inglés como en la imagen de ref */}
                 <button type="submit" class="subscribe-button">SUBSCRIBE</button>
             </form>
             <p id="formMessage" class="form-message-style"></p>
+
+            {/* Añadir el logo SVG */}
+            <div class="logo-container">
+                <img src="./assets/hf.svg" alt="Fuled by Sunshine Logo" class="footer-logo">
+            </div>
         </div>
     </div>
     <script>
         // --- CONFIGURACIÓN DE LA CUENTA REGRESIVA ---
-        const countdownDate = new Date("Jun 30, 2025 23:59:59").getTime(); // ¡¡TU FECHA!!
+        // ¡¡IMPORTANTE!! CAMBIA ESTA FECHA A TU FECHA DE LANZAMIENTO
+        const countdownDate = new Date("Dec 31, 2024 23:59:59").getTime();
 
         const countdownFunction = setInterval(function() {
             const now = new Date().getTime();
@@ -92,16 +69,24 @@ body {
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("days").innerHTML = String(days).padStart(2, '0');
-            document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
+            // Asegúrate de que los IDs coincidan si cambiaste algo
+            const daysElem = document.getElementById("days");
+            const hoursElem = document.getElementById("hours");
+            const minutesElem = document.getElementById("minutes");
+            const secondsElem = document.getElementById("seconds");
+
+            if (daysElem) daysElem.innerHTML = String(days).padStart(2, '0');
+            if (hoursElem) hoursElem.innerHTML = String(hours).padStart(2, '0');
+            if (minutesElem) minutesElem.innerHTML = String(minutes).padStart(2, '0');
+            if (secondsElem) secondsElem.innerHTML = String(seconds).padStart(2, '0');
+
 
             if (distance < 0) {
                 clearInterval(countdownFunction);
                 const countdownElem = document.getElementById("countdown");
-                // Estilo para el mensaje de lanzamiento
-                countdownElem.innerHTML = "<p style='grid-column: span 4 / span 4; font-size: 1.5rem; font-weight: 700; color: var(--color-iepp-yellow);'>¡HEMOS LANZADO!</p>";
+                if (countdownElem) {
+                     countdownElem.innerHTML = "<p style='grid-column: span 4 / span 4; font-size: 1.5rem; font-weight: 700; color: var(--color-brand-yellow);'>¡WE ARE LIVE!</p>";
+                }
             }
         }, 1000);
 
@@ -109,23 +94,61 @@ body {
         const form = document.getElementById('subscribeForm');
         const formMessage = document.getElementById('formMessage');
         const emailInput = document.getElementById('emailInput');
+        const submitButton = form.querySelector('.subscribe-button'); // Asumiendo que el botón tiene esta clase
 
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            
-            if (!emailInput.value || !emailInput.checkValidity()) {
-                formMessage.textContent = 'Por favor, introduce un email válido.';
-                formMessage.style.color = 'var(--color-iepp-yellow)';
-                return;
-            }
-            formMessage.textContent = '¡Gracias por suscribirte!';
-            formMessage.style.color = 'var(--color-iepp-yellow)';
-            emailInput.value = ''; 
-            setTimeout(() => {
+        // URL de tu backend sender.go (ajusta si es necesario)
+        const BACKEND_URL = '/api/subscribe'; // Cambia esto cuando despliegues tu backend
+
+        if (form) {
+            form.addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                if (!emailInput.value || !emailInput.checkValidity()) {
+                    formMessage.textContent = 'Please enter a valid email address.';
+                    formMessage.style.color = 'var(--color-brand-yellow)';
+                    return;
+                }
+
+                const originalButtonText = submitButton.textContent;
+                submitButton.textContent = 'SENDING...';
+                submitButton.disabled = true;
                 formMessage.textContent = '';
-            }, 3000);
-        });
-    </script>
 
+                try {
+                    const response = await fetch(BACKEND_URL, { // ¡Asegúrate que BACKEND_URL esté definido!
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email: emailInput.value })
+                    });
+
+                    // Asumiendo que tu backend devuelve JSON
+                    // Si no devuelve JSON o no devuelve nada, esta parte puede fallar
+                    const result = await response.json().catch(() => ({})); // Intenta parsear, si falla, objeto vacío
+
+                    if (response.ok) {
+                        formMessage.textContent = result.message || 'Thanks for subscribing!';
+                        formMessage.style.color = 'var(--color-brand-yellow)';
+                        emailInput.value = '';
+                    } else {
+                        formMessage.textContent = result.error || 'Oops! Something went wrong.';
+                        formMessage.style.color = '#FF6B6B'; // Un color de error
+                    }
+
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    formMessage.textContent = 'Could not connect. Please try again later.'; // Mensaje más genérico
+                    formMessage.style.color = '#FF6B6B';
+                } finally {
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+                    setTimeout(() => {
+                        if(formMessage) formMessage.textContent = '';
+                    }, 5000);
+                }
+            });
+        }
+    </script>
 </body>
 </html>
