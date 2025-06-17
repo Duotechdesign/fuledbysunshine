@@ -56,74 +56,123 @@
     </div>
 
     <script>
-        const countdownDate = new Date("Jul 30, 2025 23:59:59").getTime();
-        const countdownFunction = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = countdownDate - now;
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            const daysElem = document.getElementById("days");
-            const hoursElem = document.getElementById("hours");
-            const minutesElem = document.getElementById("minutes");
-            const secondsElem = document.getElementById("seconds");
-            if (daysElem) daysElem.innerHTML = String(days).padStart(2, '0');
-            if (hoursElem) hoursElem.innerHTML = String(hours).padStart(2, '0');
-            if (minutesElem) minutesElem.innerHTML = String(minutes).padStart(2, '0');
-            if (secondsElem) secondsElem.innerHTML = String(seconds).padStart(2, '0');
-            if (distance < 0) {
-                clearInterval(countdownFunction);
-                if (daysElem) daysElem.innerHTML = "00";
-                if (hoursElem) hoursElem.innerHTML = "00";
-                if (minutesElem) minutesElem.innerHTML = "00";
-                if (secondsElem) secondsElem.innerHTML = "00";
-            }
-        }, 1000);
+       const countdownDate = new Date("Jul 30, 2025 23:59:59").getTime(); // Fecha de lanzamiento
 
-        const form = document.getElementById('subscribeForm');
-        const formMessage = document.getElementById('formMessage');
-        const emailInput = document.getElementById('emailInput');
-        const submitButton = form.querySelector('.subscribe-button');
-        const BACKEND_URL = '/api/subscribe'; // Cambia esto a tu URL real del backend
-        if (form) {
-            form.addEventListener('submit', async function(event) {
-                event.preventDefault();
-                if (!emailInput.checkValidity()) {
-                    formMessage.textContent = 'Please enter a valid email address.';
-                    formMessage.style.color = 'var(--brand-yellow)';
-                    return;
-                }
-                const originalButtonText = submitButton.textContent;
-                submitButton.textContent = 'SENDING...';
-                submitButton.disabled = true;
-                formMessage.textContent = '';
-                try {
-                    const response = await fetch(BACKEND_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email: emailInput.value })
-                    });
-                    const result = await response.json().catch(() => ({}));
-                    if (response.ok) {
-                        formMessage.textContent = result.message || 'Thanks for subscribing!';
-                        formMessage.style.color = 'var(--brand-yellow)';
-                        emailInput.value = '';
-                    } else {
-                        formMessage.textContent = result.error || 'Oops! Something went wrong.';
-                        formMessage.style.color = '#FF6B6B';
-                    }
-                } catch (error) {
-                    console.error('Error submitting form:', error);
-                    formMessage.textContent = 'Could not connect. Please try again later.';
-                    formMessage.style.color = '#FF6B6B';
-                } finally {
-                    submitButton.textContent = originalButtonText;
-                    submitButton.disabled = false;
-                    setTimeout(() => { if (formMessage) formMessage.textContent = ''; }, 5000);
-                }
-            });
+const countdownFunction = setInterval(function() {
+    const now = new Date().getTime();
+    const distance = countdownDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    const daysElem = document.getElementById("days");
+    const hoursElem = document.getElementById("hours");
+    const minutesElem = document.getElementById("minutes");
+    const secondsElem = document.getElementById("seconds");
+
+    if (daysElem) daysElem.innerHTML = String(days).padStart(2, '0');
+    if (hoursElem) hoursElem.innerHTML = String(hours).padStart(2, '0');
+    if (minutesElem) minutesElem.innerHTML = String(minutes).padStart(2, '0');
+    if (secondsElem) secondsElem.innerHTML = String(seconds).padStart(2, '0');
+
+    if (distance < 0) {
+        clearInterval(countdownFunction);
+        const countdownContainer = document.getElementById("countdown");
+        if (countdownContainer) {
+             if (daysElem) daysElem.innerHTML = "00";
+             if (hoursElem) hoursElem.innerHTML = "00";
+             if (minutesElem) minutesElem.innerHTML = "00";
+             if (secondsElem) secondsElem.innerHTML = "00";
+             // Opcional: podrías cambiar el texto del .subscribe-prompt aquí si quieres
+             // const promptElem = document.querySelector('.subscribe-prompt');
+             // if (promptElem) promptElem.textContent = "¡Hemos lanzado! Visita nuestro sitio.";
         }
+    }
+}, 1000);
+
+// --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN ---
+const form = document.getElementById('subscribeForm');
+const formMessage = document.getElementById('formMessage');
+const emailInput = document.getElementById('emailInput');
+const submitButton = form.querySelector('.subscribe-button');
+
+// --- CONFIGURACIÓN DEL API ---
+const BACKEND_URL = 'https://fueledbysunshine-form-sender.onrender.com/send';
+const API_KEY = 'c2d21b16-f30f-4da1-8dc1-267c5a1256a6'; // La X-Api-Key que definiste en tu BD
+const SERVICE_NAME_FOR_EMAIL_SUBJECT = 'Fueled by Sunshine - New Subscriber';
+const GENERIC_NAME_FOR_USER = 'Sunshine Enthusiast';
+// --- FIN CONFIGURACIÓN DEL API ---
+
+if (form) {
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        if (!emailInput.value || !emailInput.checkValidity()) {
+            formMessage.textContent = 'Please enter a valid email address.';
+            formMessage.style.color = 'var(--brand-yellow)'; // Color de tu marca para mensajes
+            return;
+        }
+
+        const originalButtonText = submitButton.textContent;
+        submitButton.textContent = 'SENDING...';
+        submitButton.disabled = true;
+        formMessage.textContent = ''; // Limpiar mensaje anterior
+
+        const dataToSend = {
+            email: emailInput.value,
+            service: SERVICE_NAME_FOR_EMAIL_SUBJECT,
+            name: GENERIC_NAME_FOR_USER
+        };
+
+        try {
+            const response = await fetch(BACKEND_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': API_KEY // Envío de la API Key en el header
+                },
+                body: JSON.stringify(dataToSend)
+            });
+
+            // Intentar parsear la respuesta como JSON, incluso si no es un 2xx
+            // para poder leer mensajes de error del backend si los envía en JSON.
+            let result = {};
+            try {
+                result = await response.json();
+            } catch (e) {
+                // Si la respuesta no es JSON (ej. un error HTML de un proxy o un 502),
+                // result quedará como objeto vacío y nos basaremos en response.ok y response.statusText
+                console.warn("Response was not JSON:", e);
+            }
+
+            if (response.ok) { // response.ok es true si el status es 200-299
+                formMessage.textContent = result.message || 'Thanks for subscribing! Please check your email.';
+                formMessage.style.color = 'var(--brand-yellow)'; // Color de éxito
+                emailInput.value = ''; // Limpiar el input
+            } else {
+                // Si el backend envió un error en JSON con un campo "message" o "error"
+                const errorMessage = result.message || result.error || `Error: ${response.status} ${response.statusText}`;
+                formMessage.textContent = `Oops! ${errorMessage}`;
+                formMessage.style.color = '#FF6B6B'; // Un color de error (rojo)
+                console.error('Backend error:', response.status, result);
+            }
+
+        } catch (error) {
+            console.error('Error submitting form (network or CORS issue):', error);
+            formMessage.textContent = 'Could not connect to the server. Please try again later.';
+            formMessage.style.color = '#FF6B6B'; // Color de error
+        } finally {
+            submitButton.textContent = originalButtonText;
+            submitButton.disabled = false;
+            // Opcional: limpiar el mensaje después de unos segundos
+            setTimeout(() => {
+                if (formMessage) formMessage.textContent = '';
+            }, 7000); // Mensaje visible por 7 segundos
+        }
+    });
+}
     </script>
 </body>
 </html>
