@@ -56,42 +56,42 @@
     </div>
 
     <script>
-       const countdownDate = new Date("Jul 30, 2025 23:59:59").getTime(); // Fecha de lanzamiento
+     const countDownDate = new Date("Sep 10, 2024 00:00:00").getTime();
 
-const countdownFunction = setInterval(function() {
-    const now = new Date().getTime();
-    const distance = countdownDate - now;
+// Actualizamos el contador cada segundo
+const x = setInterval(function() {
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  // Obtenemos la fecha y hora actual
+  const now = new Date().getTime();
+    
+  // Calculamos la distancia entre la fecha final y la actual
+  const distance = countDownDate - now;
+    
+  // Cálculos de tiempo para días, horas, minutos y segundos
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Mostramos el resultado en los elementos HTML correspondientes
+  // Nos aseguramos de que los elementos existan antes de intentar actualizarlos
+  const daysEl = document.getElementById("days");
+  const hoursEl = document.getElementById("hours");
+  const minutesEl = document.getElementById("minutes");
+  const secondsEl = document.getElementById("seconds");
 
-    const daysElem = document.getElementById("days");
-    const hoursElem = document.getElementById("hours");
-    const minutesElem = document.getElementById("minutes");
-    const secondsElem = document.getElementById("seconds");
-
-    if (daysElem) daysElem.innerHTML = String(days).padStart(2, '0');
-    if (hoursElem) hoursElem.innerHTML = String(hours).padStart(2, '0');
-    if (minutesElem) minutesElem.innerHTML = String(minutes).padStart(2, '0');
-    if (secondsElem) secondsElem.innerHTML = String(seconds).padStart(2, '0');
-
-    if (distance < 0) {
-        clearInterval(countdownFunction);
-        const countdownContainer = document.getElementById("countdown");
-        if (countdownContainer) {
-             if (daysElem) daysElem.innerHTML = "00";
-             if (hoursElem) hoursElem.innerHTML = "00";
-             if (minutesElem) minutesElem.innerHTML = "00";
-             if (secondsElem) secondsElem.innerHTML = "00";
-             // Opcional: podrías cambiar el texto del .subscribe-prompt aquí si quieres
-             // const promptElem = document.querySelector('.subscribe-prompt');
-             // if (promptElem) promptElem.textContent = "¡Hemos lanzado! Visita nuestro sitio.";
-        }
-    }
+  if (daysEl) daysEl.innerText = days;
+  if (hoursEl) hoursEl.innerText = hours;
+  if (minutesEl) minutesEl.innerText = minutes;
+  if (secondsEl) secondsEl.innerText = seconds;
+    
+  // Si el contador llega a cero, mostramos un mensaje
+  if (distance < 0) {
+    clearInterval(x);
+    const countdownEl = document.getElementById("countdown");
+    if (countdownEl) countdownEl.innerHTML = "<div style='font-size: 1.5rem;'>¡YA ESTAMOS EN VIVO!</div>";
+  }
 }, 1000);
-
 // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN ---
 const form = document.getElementById('subscribeForm');
 const formMessage = document.getElementById('formMessage');
