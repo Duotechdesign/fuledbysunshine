@@ -1,69 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Próximamente - Fueled by Sunshine</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-
-    <div
-        class="background-container"
-        style="background-image: url('./assets/bgImg.webp');"
-    >
-        <div class="content-box">
-            <h1 class="main-title">
-              COOKING UP SOMETHING SPECIAL!
-            </h1>
-
-            <!-- ==================================================================== -->
-            <!--   AQUÍ ESTÁ EL CAMBIO: REEMPLAZAMOS EL TEXTO "EN VIVO" POR ESTO      -->
-            <!-- ==================================================================== -->
-            <div id="countdown" class="countdown-grid">
-                <div class="timer-item">
-                    <div id="days" class="timer-value">--</div>
-                    <div class="timer-label">DAYS</div>
-                </div>
-                <div class="timer-item">
-                    <div id="hours" class="timer-value">--</div>
-                    <div class="timer-label">HOURS</div>
-                </div>
-                <div class="timer-item">
-                    <div id="minutes" class="timer-value">--</div>
-                    <div class="timer-label">MINS</div>
-                </div>
-                <div class="timer-item">
-                    <div id="seconds" class="timer-value">--</div>
-                    <div class="timer-label">SECONDS</div>
-                </div>
-            </div>
-
-            <p class="subscribe-prompt">Be the first to know when we launch.</p>
-
-            <form id="subscribeForm" class="subscribe-form">
-                <input type="email" id="emailInput" name="email" placeholder="Your email address..." required class="email-input">
-                <button type="submit" class="subscribe-button">SUBSCRIBE</button>
-            </form>
-            <p id="formMessage" class="form-message-style"></p>
-
-        </div>
-
-        <div class="logo-container">
-            <img src="./assets/hf.svg" alt="Fuled by Sunshine Logo" class="footer-logo">
-        </div>
-
-    </div>
-
-    <!-- ==================================================================== -->
-    <!--          ESTE ES EL SCRIPT COMPLETO Y CORRECTO                     -->
-    <!-- ==================================================================== -->
     <script>
-        // --- MANEJO DEL CONTADOR CON FECHA CORREGIDA ---
-        const countDownDate = new Date("2024-09-10T00:00:00-06:00").getTime(); // Fecha con zona horaria para México
+        // --- MANEJO DEL CONTADOR CON FECHA CORREGIDA Y ROBUSTA ---
+        const countDownDate = new Date("2024-09-10T00:00:00Z").getTime() - (6 * 60 * 60 * 1000); // 10 de Sep a medianoche UTC, menos 6 horas
+        
         const countdownInterval = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
@@ -88,7 +26,7 @@
             }
         }, 1000);
 
-        // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN (TU CÓDIGO ORIGINAL) ---
+        // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN ---
         const form = document.getElementById('subscribeForm');
         const formMessage = document.getElementById('formMessage');
         const emailInput = document.getElementById('emailInput');
@@ -162,5 +100,3 @@
             });
         }
     </script>
-</body>
-</html>
