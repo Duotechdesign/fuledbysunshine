@@ -1,76 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Próximamente - Fueled by Sunshine</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div
-      class="background-container"
-      style="background-image: url('./assets/bgImg.webp')"
-    >
-      <div class="content-box">
-        <!-- El cambio para forzar la actualización -->
-        <h1 class="main-title">COOKING UP SOMETHING AWESOME!</h1>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-        <div id="countdown" class="countdown-grid">
-          <div class="timer-item">
-            <div id="days" class="timer-value">--</div>
-            <div class="timer-label">DAYS</div>
-          </div>
-          <div class="timer-item">
-            <div id="hours" class="timer-value">--</div>
-            <div class="timer-label">HOURS</div>
-          </div>
-          <div class="timer-item">
-            <div id="minutes" class="timer-value">--</div>
-            <div class="timer-label">MINS</div>
-          </div>
-          <div class="timer-item">
-            <div id="seconds" class="timer-value">--</div>
-            <div class="timer-label">SECONDS</div>
-          </div>
+    <div
+        class="background-container"
+        style="background-image: url('./assets/bgImg.webp');"
+    >
+        <div class="content-box">
+            <h1 class="main-title">
+              COOKING UP SOMETHING SPECIAL!
+            </h1>
+
+            <!-- ==================================================================== -->
+            <!--   AQUÍ ESTÁ EL CAMBIO: REEMPLAZAMOS EL TEXTO "EN VIVO" POR ESTO      -->
+            <!-- ==================================================================== -->
+            <div id="countdown" class="countdown-grid">
+                <div class="timer-item">
+                    <div id="days" class="timer-value">--</div>
+                    <div class="timer-label">DAYS</div>
+                </div>
+                <div class="timer-item">
+                    <div id="hours" class="timer-value">--</div>
+                    <div class="timer-label">HOURS</div>
+                </div>
+                <div class="timer-item">
+                    <div id="minutes" class="timer-value">--</div>
+                    <div class="timer-label">MINS</div>
+                </div>
+                <div class="timer-item">
+                    <div id="seconds" class="timer-value">--</div>
+                    <div class="timer-label">SECONDS</div>
+                </div>
+            </div>
+
+            <p class="subscribe-prompt">Be the first to know when we launch.</p>
+
+            <form id="subscribeForm" class="subscribe-form">
+                <input type="email" id="emailInput" name="email" placeholder="Your email address..." required class="email-input">
+                <button type="submit" class="subscribe-button">SUBSCRIBE</button>
+            </form>
+            <p id="formMessage" class="form-message-style"></p>
+
         </div>
 
-        <p class="subscribe-prompt">Be the first to know when we launch.</p>
+        <div class="logo-container">
+            <img src="./assets/hf.svg" alt="Fuled by Sunshine Logo" class="footer-logo">
+        </div>
 
-        <form id="subscribeForm" class="subscribe-form">
-          <input
-            type="email"
-            id="emailInput"
-            name="email"
-            placeholder="Your email address..."
-            required
-            class="email-input"
-          />
-          <button type="submit" class="subscribe-button">SUBSCRIBE</button>
-        </form>
-        <p id="formMessage" class="form-message-style"></p>
-      </div>
-
-      <div class="logo-container">
-        <img
-          src="./assets/hf.svg"
-          alt="Fuled by Sunshine Logo"
-          class="footer-logo"
-        />
-      </div>
     </div>
 
-    <!-- ============================================= -->
-    <!--       AQUÍ ESTÁ EL SCRIPT QUE FALTABA         -->
-    <!-- ============================================= -->
+    <!-- ==================================================================== -->
+    <!--          ESTE ES EL SCRIPT COMPLETO Y CORRECTO                     -->
+    <!-- ==================================================================== -->
     <script>
-        // --- MANEJO DEL CONTADOR ---
-        const countDownDate = new Date("2024-09-10T00:00:00-06:00").getTime(); // Fecha con zona horaria
+        // --- MANEJO DEL CONTADOR CON FECHA CORREGIDA ---
+        const countDownDate = new Date("2024-09-10T00:00:00-06:00").getTime(); // Fecha con zona horaria para México
         const countdownInterval = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
@@ -95,7 +88,7 @@
             }
         }, 1000);
 
-        // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN ---
+        // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN (TU CÓDIGO ORIGINAL) ---
         const form = document.getElementById('subscribeForm');
         const formMessage = document.getElementById('formMessage');
         const emailInput = document.getElementById('emailInput');
@@ -109,20 +102,24 @@
         if (form) {
             form.addEventListener('submit', async function(event) {
                 event.preventDefault();
+
                 if (!emailInput.value || !emailInput.checkValidity()) {
                     formMessage.textContent = 'Please enter a valid email address.';
                     formMessage.style.color = 'var(--brand-yellow)';
                     return;
                 }
+
                 const originalButtonText = submitButton.textContent;
                 submitButton.textContent = 'SENDING...';
                 submitButton.disabled = true;
                 formMessage.textContent = '';
+
                 const dataToSend = {
                     email: emailInput.value,
                     service: SERVICE_NAME_FOR_EMAIL_SUBJECT,
                     name: GENERIC_NAME_FOR_USER
                 };
+
                 try {
                     const response = await fetch(BACKEND_URL, {
                         method: 'POST',
@@ -132,12 +129,14 @@
                         },
                         body: JSON.stringify(dataToSend)
                     });
+
                     let result = {};
                     try {
                         result = await response.json();
                     } catch (e) {
                         console.warn("Response was not JSON:", e);
                     }
+
                     if (response.ok) {
                         formMessage.textContent = result.message || 'Thanks for subscribing! Please check your email.';
                         formMessage.style.color = 'var(--brand-yellow)';
@@ -148,6 +147,7 @@
                         formMessage.style.color = '#FF6B6B';
                         console.error('Backend error:', response.status, result);
                     }
+
                 } catch (error) {
                     console.error('Error submitting form:', error);
                     formMessage.textContent = 'Could not connect to the server. Please try again later.';
@@ -162,5 +162,5 @@
             });
         }
     </script>
-  </body>
+</body>
 </html>
