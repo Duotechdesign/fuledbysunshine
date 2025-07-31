@@ -20,9 +20,6 @@
               COOKING UP SOMETHING SPECIAL!
             </h1>
 
-            <!-- ============================================= -->
-            <!--   HTML DEL CONTADOR PARA QUE SEA VISIBLE     -->
-            <!-- ============================================= -->
             <div id="countdown" class="countdown-grid">
                 <div class="timer-item">
                     <div id="days" class="timer-value">--</div>
@@ -41,7 +38,7 @@
                     <div class="timer-label">SECONDS</div>
                 </div>
             </div>
-
+            
             <p class="subscribe-prompt">Be the first to know when we launch.</p>
 
             <form id="subscribeForm" class="subscribe-form">
@@ -58,12 +55,11 @@
 
     </div>
 
-    <!-- ============================================= -->
-    <!--       SCRIPT COMPLETO Y UNIFICADO             -->
-    <!-- ============================================= -->
     <script>
         // --- MANEJO DEL CONTADOR ---
-        const countDownDate = new Date("Sep 10, 2024 00:00:00").getTime();
+        // ¡¡¡AQUÍ ESTÁ LA CORRECCIÓN!!! Usamos un formato de fecha universal.
+        const countDownDate = new Date("2024-09-10T00:00:00-06:00").getTime(); // 10 de Sep a medianoche, hora de México Central (CST)
+
         const countdownInterval = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
@@ -73,7 +69,6 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
             
-            // Verificamos que los elementos existan antes de escribir en ellos
             if (document.getElementById("days")) document.getElementById("days").innerText = days;
             if (document.getElementById("hours")) document.getElementById("hours").innerText = hours;
             if (document.getElementById("minutes")) document.getElementById("minutes").innerText = minutes;
@@ -83,8 +78,8 @@
                 clearInterval(countdownInterval);
                 const countdownEl = document.getElementById("countdown");
                 if (countdownEl) {
-                    countdownEl.innerHTML = "<div class='live-message' style='font-size: 1.5rem; color: var(--brand-yellow); text-transform: uppercase;'>¡Ya estamos en vivo!</div>";
-                    countdownEl.style.gridTemplateColumns = '1fr'; // Hacemos que ocupe todo el espacio
+                    countdownEl.innerHTML = "<div class='live-message' style='font-size: 1.5rem; color: var(--brand-yellow); text-transform: uppercase;'>¡YA ESTAMOS EN VIVO!</div>";
+                    countdownEl.style.gridTemplateColumns = '1fr';
                 }
             }
         }, 1000);
