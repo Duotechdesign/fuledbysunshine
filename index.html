@@ -14,109 +14,49 @@
     <div class="background-container" style="background-image: url('./assets/bgImg.webp');">
         <div class="content-box">
             <h1 class="main-title">COOKING UP SOMETHING SPECIAL!</h1>
-            <div id="countdown" class="countdown-grid">
-                <div class="timer-item"><div id="days" class="timer-value">--</div><div class="timer-label">DAYS</div></div>
-                <div class="timer-item"><div id="hours" class="timer-value">--</div><div class="timer-label">HOURS</div></div>
-                <div class="timer-item"><div id="minutes" class="timer-value">--</div><div class="timer-label">MINS</div></div>
-                <div class="timer-item"><div id="seconds" class="timer-value">--</div><div class="timer-label">SECONDS</div></div>
-            </div>
-            <p class="subscribe-prompt">Be the first to know when we launch.</p>
-            <form id="subscribeForm" class="subscribe-form">
-                <input type="email" id="emailInput" name="email" placeholder="Your email address..." required class="email-input">
-                <button type="submit" class="subscribe-button">SUBSCRIBE</button>
-            </form>
-            <p id="formMessage" class="form-message-style"></p>
-        </div>
-        <div class="logo-container">
-            <img src="./assets/hf.svg" alt="Fuled by Sunshine Logo" class="footer-logo">
-        </div>
-    </div>
+          <div class="countdown-wrapper">
+  <div class="countdown">
+    <div><span id="days">00</span><small>Days</small></div>
+    <div><span id="hours">00</span><small>Hours</small></div>
+    <div><span id="minutes">00</span><small>Minutes</small></div>
+    <div><span id="seconds">00</span><small>Seconds</small></div>
+  </div>
+</div>
 
-    <script>
-        // ====================================================================
-        //   EL "SEGURO" QUE ESPERA A QUE LA PÁGINA ESTÉ LISTA
-        // ====================================================================
-        document.addEventListener('DOMContentLoaded', function() {
+<script>
+  function updateCountdown() {
+    // Fecha objetivo: 10 de agosto de 2025 a las 12:00 PM en la zona horaria local del visitante
+    const targetDate = new Date();
+    targetDate.setFullYear(2025);
+    targetDate.setMonth(7); // Agosto = mes 7 (base 0)
+    targetDate.setDate(10);
+    targetDate.setHours(12, 0, 0, 0); // 12:00 PM local
 
-            // --- MANEJO DEL CONTADOR ---
-         const countDownDate = new Date("August 10, 2025 12:00:00").getTime();
+    const now = new Date();
+    const diff = targetDate - now;
 
-            const countdownInterval = setInterval(function() {
-                const now = new Date().getTime();
-                const distance = countDownDate - now;
-                
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                if (document.getElementById("days")) document.getElementById("days").innerText = days;
-                if (document.getElementById("hours")) document.getElementById("hours").innerText = hours;
-                if (document.getElementById("minutes")) document.getElementById("minutes").innerText = minutes;
-                if (document.getElementById("seconds")) document.getElementById("seconds").innerText = seconds;
-                
-                if (distance < 0) {
-                    clearInterval(countdownInterval);
-                    const countdownEl = document.getElementById("countdown");
-                    if (countdownEl) {
-                        countdownEl.innerHTML = "<div class='live-message' style='font-size: 1.5rem; color: var(--brand-yellow); text-transform: uppercase;'>¡YA ESTAMOS EN VIVO!</div>";
-                        countdownEl.style.gridTemplateColumns = '1fr';
-                    }
-                }
-            }, 1000);
+    if (diff <= 0) {
+      document.getElementById("days").textContent = "00";
+      document.getElementById("hours").textContent = "00";
+      document.getElementById("minutes").textContent = "00";
+      document.getElementById("seconds").textContent = "00";
+      return;
+    }
 
-            // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN ---
-            const form = document.getElementById('subscribeForm');
-            const formMessage = document.getElementById('formMessage');
-            const emailInput = document.getElementById('emailInput');
-            const submitButton = form.querySelector('.subscribe-button');
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
 
-            const BACKEND_URL = 'https://fueledbysunshine-form-sender.onrender.com/send';
-            const API_KEY = 'c2d21b16-f30f-4da1-8dc1-267c5a1256a6';
-            const SERVICE_NAME_FOR_EMAIL_SUBJECT = 'Fueled by Sunshine - New Subscriber';
-            const GENERIC_NAME_FOR_USER = 'Sunshine Enthusiast';
+    document.getElementById("days").textContent = String(days).padStart(2, '0');
+    document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+    document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+    document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+  }
 
-            if (form) {
-                form.addEventListener('submit', async function(event) {
-                    event.preventDefault();
-                    if (!emailInput.value || !emailInput.checkValidity()) {
-                        formMessage.textContent = 'Please enter a valid email address.';
-                        formMessage.style.color = 'var(--brand-yellow)';
-                        return;
-                    }
-                    const originalButtonText = submitButton.textContent;
-                    submitButton.textContent = 'SENDING...';
-                    submitButton.disabled = true;
-                    formMessage.textContent = '';
-                    const dataToSend = { email: emailInput.value, service: SERVICE_NAME_FOR_EMAIL_SUBJECT, name: GENERIC_NAME_FOR_USER };
-                    try {
-                        const response = await fetch(BACKEND_URL, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json', 'X-Api-Key': API_KEY },
-                            body: JSON.stringify(dataToSend)
-                        });
-                        let result = {};
-                        try { result = await response.json(); } catch (e) { console.warn("Response was not JSON:", e); }
-                        if (response.ok) {
-                            formMessage.textContent = result.message || 'Thanks for subscribing! Please check your email.';
-                            formMessage.style.color = 'var(--brand-yellow)';
-                            emailInput.value = '';
-                        } else {
-                            const errorMessage = result.message || result.error || `Error: ${response.status} ${response.statusText}`;
-                            formMessage.textContent = `Oops! ${errorMessage}`;
-                            formMessage.style.color = '#FF6B6B';
-                        }
-                    } catch (error) {
-                        formMessage.textContent = 'Could not connect to the server. Please try again later.';
-                        formMessage.style.color = '#FF6B6B';
-                    } finally {
-                        submitButton.textContent = originalButtonText;
-                        submitButton.disabled = false;
-                        setTimeout(() => { if (formMessage) formMessage.textContent = ''; }, 7000);
-                    }
-                });
-            }
-        });
-    </script>
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+</script>
+
 </body>
 </html>
