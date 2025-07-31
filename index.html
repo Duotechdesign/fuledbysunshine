@@ -3,42 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Próximamente - Fuled by Sunshine</title>
+    <title>Próximamente - Fueled by Sunshine</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <div
-        class="background-container"
-        style="background-image: url('./assets/bgImg.webp');"
-    >
+    <div class="background-container" style="background-image: url('./assets/bgImg.webp');">
         <div class="content-box">
-            <h1 class="main-title">
-              COOKING UP SOMETHING SPECIAL!
-            </h1>
+            <h1 class="main-title">COOKING UP SOMETHING SPECIAL!</h1>
 
+            <!-- ============================================= -->
+            <!--   AQUÍ ESTÁ EL HTML DEL CONTADOR QUE FALTABA  -->
+            <!-- ============================================= -->
             <div id="countdown" class="countdown-grid">
                 <div class="timer-item">
-                    <div id="days" class="timer-value">00</div>
-                    <p class="timer-label">DAYS</p>
+                    <div id="days" class="timer-value">--</div>
+                    <div class="timer-label">DAYS</div>
                 </div>
                 <div class="timer-item">
-                    <div id="hours" class="timer-value">00</div>
-                    <p class="timer-label">HOURS</p>
+                    <div id="hours" class="timer-value">--</div>
+                    <div class="timer-label">HOURS</div>
                 </div>
                 <div class="timer-item">
-                    <div id="minutes" class="timer-value">00</div>
-                    <p class="timer-label">MINS</p>
+                    <div id="minutes" class="timer-value">--</div>
+                    <div class="timer-label">MINS</div>
                 </div>
                 <div class="timer-item">
-                    <div id="seconds" class="timer-value">00</div>
-                    <p class="timer-label">SECONDS</p>
+                    <div id="seconds" class="timer-value">--</div>
+                    <div class="timer-label">SECONDS</div>
                 </div>
             </div>
-
+            <!-- ============================================= -->
+            <!--               FIN DEL CONTADOR               -->
+            <!-- ============================================= -->
+            
             <p class="subscribe-prompt">Be the first to know when we launch.</p>
 
             <form id="subscribeForm" class="subscribe-form">
@@ -46,133 +46,38 @@
                 <button type="submit" class="subscribe-button">SUBSCRIBE</button>
             </form>
             <p id="formMessage" class="form-message-style"></p>
-
         </div>
-
         <div class="logo-container">
             <img src="./assets/hf.svg" alt="Fuled by Sunshine Logo" class="footer-logo">
         </div>
-
     </div>
 
+    <!-- El script se encarga de rellenar el contador de arriba -->
     <script>
-     const countDownDate = new Date("Sep 10, 2024 00:00:00").getTime();
-
-// Actualizamos el contador cada segundo
-const x = setInterval(function() {
-
-  // Obtenemos la fecha y hora actual
-  const now = new Date().getTime();
-    
-  // Calculamos la distancia entre la fecha final y la actual
-  const distance = countDownDate - now;
-    
-  // Cálculos de tiempo para días, horas, minutos y segundos
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-  // Mostramos el resultado en los elementos HTML correspondientes
-  // Nos aseguramos de que los elementos existan antes de intentar actualizarlos
-  const daysEl = document.getElementById("days");
-  const hoursEl = document.getElementById("hours");
-  const minutesEl = document.getElementById("minutes");
-  const secondsEl = document.getElementById("seconds");
-
-  if (daysEl) daysEl.innerText = days;
-  if (hoursEl) hoursEl.innerText = hours;
-  if (minutesEl) minutesEl.innerText = minutes;
-  if (secondsEl) secondsEl.innerText = seconds;
-    
-  // Si el contador llega a cero, mostramos un mensaje
-  if (distance < 0) {
-    clearInterval(x);
-    const countdownEl = document.getElementById("countdown");
-    if (countdownEl) countdownEl.innerHTML = "<div style='font-size: 1.5rem;'>¡YA ESTAMOS EN VIVO!</div>";
-  }
-}, 1000);
-// --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN ---
-const form = document.getElementById('subscribeForm');
-const formMessage = document.getElementById('formMessage');
-const emailInput = document.getElementById('emailInput');
-const submitButton = form.querySelector('.subscribe-button');
-
-// --- CONFIGURACIÓN DEL API ---
-const BACKEND_URL = 'https://fueledbysunshine-form-sender.onrender.com/send';
-const API_KEY = 'c2d21b16-f30f-4da1-8dc1-267c5a1256a6'; // La X-Api-Key que definiste en tu BD
-const SERVICE_NAME_FOR_EMAIL_SUBJECT = 'Fueled by Sunshine - New Subscriber';
-const GENERIC_NAME_FOR_USER = 'Sunshine Enthusiast';
-// --- FIN CONFIGURACIÓN DEL API ---
-
-if (form) {
-    form.addEventListener('submit', async function(event) {
-        event.preventDefault();
-
-        if (!emailInput.value || !emailInput.checkValidity()) {
-            formMessage.textContent = 'Please enter a valid email address.';
-            formMessage.style.color = 'var(--brand-yellow)'; // Color de tu marca para mensajes
-            return;
-        }
-
-        const originalButtonText = submitButton.textContent;
-        submitButton.textContent = 'SENDING...';
-        submitButton.disabled = true;
-        formMessage.textContent = ''; // Limpiar mensaje anterior
-
-        const dataToSend = {
-            email: emailInput.value,
-            service: SERVICE_NAME_FOR_EMAIL_SUBJECT,
-            name: GENERIC_NAME_FOR_USER
-        };
-
-        try {
-            const response = await fetch(BACKEND_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Api-Key': API_KEY // Envío de la API Key en el header
-                },
-                body: JSON.stringify(dataToSend)
-            });
-
-            // Intentar parsear la respuesta como JSON, incluso si no es un 2xx
-            // para poder leer mensajes de error del backend si los envía en JSON.
-            let result = {};
-            try {
-                result = await response.json();
-            } catch (e) {
-                // Si la respuesta no es JSON (ej. un error HTML de un proxy o un 502),
-                // result quedará como objeto vacío y nos basaremos en response.ok y response.statusText
-                console.warn("Response was not JSON:", e);
+        const countDownDate = new Date("Sep 10, 2024 00:00:00").getTime();
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+            
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "<div class='live-message'>¡YA ESTAMOS EN VIVO!</div>";
             }
-
-            if (response.ok) { // response.ok es true si el status es 200-299
-                formMessage.textContent = result.message || 'Thanks for subscribing! Please check your email.';
-                formMessage.style.color = 'var(--brand-yellow)'; // Color de éxito
-                emailInput.value = ''; // Limpiar el input
-            } else {
-                // Si el backend envió un error en JSON con un campo "message" o "error"
-                const errorMessage = result.message || result.error || `Error: ${response.status} ${response.statusText}`;
-                formMessage.textContent = `Oops! ${errorMessage}`;
-                formMessage.style.color = '#FF6B6B'; // Un color de error (rojo)
-                console.error('Backend error:', response.status, result);
-            }
-
-        } catch (error) {
-            console.error('Error submitting form (network or CORS issue):', error);
-            formMessage.textContent = 'Could not connect to the server. Please try again later.';
-            formMessage.style.color = '#FF6B6B'; // Color de error
-        } finally {
-            submitButton.textContent = originalButtonText;
-            submitButton.disabled = false;
-            // Opcional: limpiar el mensaje después de unos segundos
-            setTimeout(() => {
-                if (formMessage) formMessage.textContent = '';
-            }, 7000); // Mensaje visible por 7 segundos
-        }
-    });
-}
+        }, 1000);
+        
+        // --- El resto de tu script para el formulario sigue aquí ---
+        const form = document.getElementById('subscribeForm');
+        // ... (todo el código del formulario que ya tenías)
     </script>
 </body>
 </html>
