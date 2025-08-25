@@ -43,26 +43,28 @@
 
     </div>
 
-    <!-- ==================================================================== -->
-    <!--          SCRIPT COMPLETO Y UNIFICADO - VERSIÓN CORREGIDA           -->
-    <!-- ==================================================================== -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            // --- MANEJO DEL CONTADOR ---
-            const countDownDate = new Date("2024-09-10T00:00:00Z").getTime() - (6 * 60 * 60 * 1000);
+            // --- MANEJO DEL CONTADOR CON FECHA A PRUEBA DE BALAS ---
+            // ====================================================================
+            //                 ESTA ES LA ÚNICA LÍNEA CORREGIDA
+            // ====================================================================
+            const countDownDate = new Date("2025-09-10T18:00:00Z").getTime(); // Septiembre es el mes 8 (Enero=0). 6:00 AM UTC es medianoche en México (UTC-6).
+
             const countdownInterval = setInterval(function() {
-                const now = new Date().getTime();
+                const now = new Date();
                 const distance = countDownDate - now;
+                
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                if (document.getElementById("days")) document.getElementById("days").innerText = days;
-                if (document.getElementById("hours")) document.getElementById("hours").innerText = hours;
-                if (document.getElementById("minutes")) document.getElementById("minutes").innerText = minutes;
-                if (document.getElementById("seconds")) document.getElementById("seconds").innerText = seconds;
+                
+                if (document.getElementById("days")) document.getElementById("days").innerText = String(days).padStart(2, '0');
+                if (document.getElementById("hours")) document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+                if (document.getElementById("minutes")) document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+                if (document.getElementById("seconds")) document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
                 
                 if (distance < 0) {
                     clearInterval(countdownInterval);
@@ -80,7 +82,7 @@
             const emailInput = document.getElementById('emailInput');
             const submitButton = form.querySelector('.subscribe-button');
 
-            const BACKEND_URL = 'https://iepp-form-sender-backend.onrender.com/send'; // URL del backend genérico
+            const BACKEND_URL = 'https://iepp-form-sender-backend.onrender.com/send';
             const API_KEY = 'c2d21b16-f30f-4da1-8dc1-267c5a1256a6';
             const SERVICE_NAME_FOR_EMAIL_SUBJECT = 'Fueled by Sunshine - New Subscriber';
             const GENERIC_NAME_FOR_USER = 'Sunshine Enthusiast';
