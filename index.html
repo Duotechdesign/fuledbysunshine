@@ -43,38 +43,36 @@
 
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
 
-            // --- MANEJO DEL CONTADOR CON FECHA A PRUEBA DE BALAS ---
-            // ====================================================================
-            //                 ESTA ES LA ÚNICA LÍNEA CORREGIDA
-            // ====================================================================
-            const countDownDate = new Date("2025-09-10T18:00:00Z").getTime(); // Septiembre es el mes 8 (Enero=0). 6:00 AM UTC es medianoche en México (UTC-6).
+        // --- MANEJO DEL CONTADOR CON FECHA A PRUEBA DE BALAS ---
+        const countDownDate = new Date("2025-09-30T18:00:00Z").getTime(); // 30 de septiembre 2025, 6:00 PM UTC
 
-            const countdownInterval = setInterval(function() {
-                const now = new Date();
-                const distance = countDownDate - now;
-                
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                if (document.getElementById("days")) document.getElementById("days").innerText = String(days).padStart(2, '0');
-                if (document.getElementById("hours")) document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-                if (document.getElementById("minutes")) document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-                if (document.getElementById("seconds")) document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
-                
-                if (distance < 0) {
-                    clearInterval(countdownInterval);
-                    const countdownEl = document.getElementById("countdown");
-                    if (countdownEl) {
-                        countdownEl.innerHTML = "<div class='live-message' style='font-size: 1.5rem; color: var(--brand-yellow); text-transform: uppercase;'>¡YA ESTAMOS EN VIVO!</div>";
-                        countdownEl.style.gridTemplateColumns = '1fr';
-                    }
+        const countdownInterval = setInterval(function() {
+            const now = new Date();
+            const distance = countDownDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            if (document.getElementById("days")) document.getElementById("days").innerText = String(days).padStart(2, '0');
+            if (document.getElementById("hours")) document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            if (document.getElementById("minutes")) document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            if (document.getElementById("seconds")) document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+            
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                const countdownEl = document.getElementById("countdown");
+                if (countdownEl) {
+                    countdownEl.innerHTML = "<div class='live-message' style='font-size: 1.5rem; color: var(--brand-yellow); text-transform: uppercase;'>¡YA ESTAMOS EN VIVO!</div>";
+                    countdownEl.style.gridTemplateColumns = '1fr';
                 }
-            }, 1000);
+            }
+        }, 1000);
+
 
             // --- MANEJO DEL FORMULARIO DE SUSCRIPCIÓN ---
             const form = document.getElementById('subscribeForm');
