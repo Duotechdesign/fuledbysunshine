@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
       // --- MANEJO DEL CONTADOR ---
       const countDownDate = new Date("2025-09-30T18:00:00Z").getTime();
@@ -56,20 +56,25 @@
         }
       }, 1000);
 
-      // ====================================================================
-      //   NUEVO SCRIPT DEL FORMULARIO QUE HABLA CON CLOUDFLARE WORKER
-      // ====================================================================
+      // --- NUEVO MANEJO DEL FORMULARIO CON CLOUDFLARE WORKER ---
       const form = document.getElementById("subscribeForm");
       const formMessage = document.getElementById("formMessage");
       const emailInput = document.getElementById("emailInput");
       const submitButton = form.querySelector(".subscribe-button");
 
       // ¡¡IMPORTANTE!! Pega aquí la URL real de tu worker 'sunshine-sender'
-      const workerUrl = "https://sunshine-sender.duotechdesign.workers.dev/"; 
+      const workerUrl = "https://sunshine-sender.TU_SUBDOMINIO.workers.dev"; 
 
       if (form) {
         form.addEventListener("submit", async function (event) {
           event.preventDefault();
+          
+          if (!emailInput.value || !emailInput.checkValidity()) {
+              formMessage.textContent = "Please enter a valid email address.";
+              formMessage.style.color = "var(--brand-yellow)";
+              return;
+          }
+
           const originalButtonText = submitButton.textContent;
           submitButton.textContent = "SENDING...";
           submitButton.disabled = true;
@@ -102,6 +107,6 @@
         });
       }
     });
-  </script>
+</script>
 </body>
 </html>
