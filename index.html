@@ -33,7 +33,9 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // --- MANEJO DEL CONTADOR ---
+      // =======================================================
+      //         PIEZA 1: EL SCRIPT DEL CONTADOR
+      // =======================================================
       const countDownDate = new Date("2025-09-30T18:00:00Z").getTime();
       const countdownInterval = setInterval(function () {
         const now = new Date();
@@ -56,25 +58,19 @@
         }
       }, 1000);
 
-      // --- NUEVO MANEJO DEL FORMULARIO CON CLOUDFLARE WORKER ---
+      // =======================================================
+      //      PIEZA 2: EL SCRIPT DEL FORMULARIO
+      // =======================================================
       const form = document.getElementById("subscribeForm");
       const formMessage = document.getElementById("formMessage");
       const emailInput = document.getElementById("emailInput");
       const submitButton = form.querySelector(".subscribe-button");
 
-      // ¡¡IMPORTANTE!! Pega aquí la URL real de tu worker 'sunshine-sender'
-      const workerUrl = "https://sunshine-sender.duotechdesign.workers.dev/"; 
+      const workerUrl = "https://sunshine-sender.duotechdesign.workers.dev"; 
 
       if (form) {
         form.addEventListener("submit", async function (event) {
           event.preventDefault();
-          
-          if (!emailInput.value || !emailInput.checkValidity()) {
-              formMessage.textContent = "Please enter a valid email address.";
-              formMessage.style.color = "var(--brand-yellow)";
-              return;
-          }
-
           const originalButtonText = submitButton.textContent;
           submitButton.textContent = "SENDING...";
           submitButton.disabled = true;
@@ -86,9 +82,7 @@
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ email: emailInput.value }),
             });
-
             const result = await response.json();
-
             if (response.ok) {
               formMessage.textContent = result.message || "Thanks! Please check your email.";
               formMessage.style.color = "var(--brand-yellow)";
